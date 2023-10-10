@@ -8,7 +8,7 @@ import {
   createTheme
 } from '@mui/material';
 // components
-import { FullLogo } from '../logo';
+import { FullLogo } from '../logos';
 
 // ----------------------------------------------------------------------
 
