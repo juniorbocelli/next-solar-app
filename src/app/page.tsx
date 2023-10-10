@@ -1,7 +1,7 @@
 // @mui
 import { Container } from '@mui/material';
 // components
-import { Header } from '@/lib/components/header';
+import { Header } from '@/lib/components/headers';
 
 // ----------------------------------------------------------------------
 
