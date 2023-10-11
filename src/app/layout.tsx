@@ -2,9 +2,8 @@ import type { Metadata } from 'next';
 // @mui
 import { Container } from '@mui/material';
 // components
-import { ThemeRegistry } from '@/lib/components/theme-registry';
+import ThemeProvider from '@/lib/theme';
 import { Header } from '@/lib/components/headers';
-import { SimpleMap } from '@/lib/components/maps';
 
 export const metadata: Metadata = {
   title: 'Next Solar App',
@@ -19,12 +18,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ThemeRegistry>
+        <ThemeProvider>
           <Container component="main" maxWidth={false} disableGutters>
             <Header />
             {children}
           </Container>
-        </ThemeRegistry>
+        </ThemeProvider>
       </body>
     </html>
   );
