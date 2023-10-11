@@ -1,9 +1,10 @@
-import type { Metadata } from 'next'
-import { Roboto_Mono } from 'next/font/google'
+import type { Metadata } from 'next';
 // @mui
-import { CssBaseline } from '@mui/material'
-
-const roboto = Roboto_Mono({ subsets: ['latin'] })
+import { Container } from '@mui/material';
+// components
+import { ThemeRegistry } from '@/lib/components/theme-registry';
+import { Header } from '@/lib/components/headers';
+import { SimpleMap } from '@/lib/components/maps';
 
 export const metadata: Metadata = {
   title: 'Next Solar App',
@@ -16,11 +17,15 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <>
-      <CssBaseline />
-      <html lang="en">
-        <body className={roboto.className}>{children}</body>
-      </html>
-    </>
-  )
+    <html lang="en">
+      <body>
+        <ThemeRegistry>
+          <Container component="main" maxWidth={false} disableGutters>
+            <Header />
+            {children}
+          </Container>
+        </ThemeRegistry>
+      </body>
+    </html>
+  );
 }
