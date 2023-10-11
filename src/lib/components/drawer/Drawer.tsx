@@ -22,15 +22,21 @@ interface Props {
   window?: () => Window;
 }
 
+// ----------------------------------------------------------------------
+
 const Root = styled('div')(({ theme }) => ({
   height: '100%',
   backgroundColor:
     theme.palette.mode === 'light' ? grey[100] : theme.palette.background.default,
 }));
 
+// ----------------------------------------------------------------------
+
 const StyledBox = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'light' ? '#fff' : grey[800],
 }));
+
+// ----------------------------------------------------------------------
 
 const Puller = styled(Box)(({ theme }) => ({
   width: 30,
@@ -41,6 +47,8 @@ const Puller = styled(Box)(({ theme }) => ({
   top: 8,
   left: 'calc(50% - 15px)',
 }));
+
+// ----------------------------------------------------------------------
 
 export default function SwipeableEdgeDrawer(props: Props) {
   const { window } = props;
