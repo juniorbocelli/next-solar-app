@@ -9,16 +9,14 @@ import Box from '@mui/material/Box';
 import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import { IAddress } from '@/lib/@types/address';
 
 // ----------------------------------------------------------------------
 
 const drawerBleeding = 56;
 
 interface Props {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
+  addresses: IAddress[];
   window?: () => Window;
 }
 
@@ -51,7 +49,7 @@ const Puller = styled(Box)(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function SwipeableEdgeDrawer(props: Props) {
-  const { window } = props;
+  const { window, addresses } = props;
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
@@ -98,7 +96,7 @@ export default function SwipeableEdgeDrawer(props: Props) {
           onClick={toggleDrawer(!open)}
         >
           <Puller />
-          <Typography sx={{ p: 2, color: 'text.secondary' }}>51 results</Typography>
+          <Typography sx={{ p: 2, color: 'text.secondary' }}>{addresses.length} resuldatos</Typography>
         </StyledBox>
         <StyledBox
           sx={{
