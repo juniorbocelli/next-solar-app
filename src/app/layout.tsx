@@ -4,6 +4,7 @@ import { Container } from '@mui/material';
 // components
 import ThemeProvider from '@/lib/theme';
 import { Header } from '@/lib/components/headers';
+import { Drawer } from '@/lib/components/drawer';
 
 export const metadata: Metadata = {
   title: 'Next Solar App',
@@ -21,7 +22,9 @@ export default function RootLayout({
         <ThemeProvider>
           <Container component="main" maxWidth={false} disableGutters>
             <Header />
+            <Drawer />
             {children}
+
           </Container>
         </ThemeProvider>
       </body>

@@ -1,4 +1,4 @@
-// @mui
+// components
 import { SimpleMap } from '@/lib/components/maps';
 
 // ----------------------------------------------------------------------
