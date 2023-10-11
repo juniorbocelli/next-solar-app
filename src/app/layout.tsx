@@ -2,30 +2,39 @@ import type { Metadata } from 'next';
 // @mui
 import { Container } from '@mui/material';
 // components
-import ThemeProvider from '@/lib/theme';
 import { Header } from '@/lib/components/headers';
 import { Drawer } from '@/lib/components/drawer';
+// providers
+import ThemeProvider from '@/lib/theme';
+import { AddressesProvider } from '@/lib/contexts/addresses';
+// services
+// services
+import { getAddresses } from '@/lib/services/getAddresses';
 
 export const metadata: Metadata = {
   title: 'Next Solar App',
   description: 'SolarApp Case',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const addresses = await getAddresses();
+
   return (
     <html lang="en">
       <body>
         <ThemeProvider>
-          <Container component="main" maxWidth={false} disableGutters>
-            <Header />
-            <Drawer />
-            {children}
+          <AddressesProvider>
+            <Container component="main" maxWidth={false} disableGutters>
+              <Header />
+              <Drawer addresses={addresses} />
+              {children}
 
-          </Container>
+            </Container>
+          </AddressesProvider>
         </ThemeProvider>
       </body>
     </html>
