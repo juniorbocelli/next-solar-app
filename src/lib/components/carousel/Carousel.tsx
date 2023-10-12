@@ -9,7 +9,7 @@ import { Box, useTheme } from '@mui/material';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 // hooks
-import { useBreackpointTest } from '@/lib/utils/breackPointTest';
+import { useBreackpointTest } from '@/lib/hooks/useBreackpointTest';
 
 interface CarouselProps {
   items: React.ReactNode[];
