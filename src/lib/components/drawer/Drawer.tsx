@@ -6,10 +6,14 @@ import { styled } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { grey } from '@mui/material/colors';
 import Box from '@mui/material/Box';
-import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import { IAddress } from '@/lib/@types/address';
+// components
+import { Carousel } from '../carousel';
+import { AddressCard } from '../card';
+// hooks
+import { useBreackpointTest } from '@/lib/utils/breackPointTest';
 
 // ----------------------------------------------------------------------
 
@@ -49,6 +53,7 @@ const Puller = styled(Box)(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function SwipeableEdgeDrawer(props: Props) {
+  const { smUp, mdUp } = useBreackpointTest()
   const { window, addresses } = props;
   const [open, setOpen] = React.useState(false);
 
@@ -58,6 +63,14 @@ export default function SwipeableEdgeDrawer(props: Props) {
 
   // This is used only for the example
   const container = window !== undefined ? () => window().document.body : undefined;
+  // TODO
+  const globalHeight = mdUp ?
+    `calc(35% - ${drawerBleeding}px)`
+    :
+    smUp ?
+      `calc(50% - ${drawerBleeding}px)`
+      :
+      `calc(80% - ${drawerBleeding}px)`
 
   return (
     <Root>
@@ -65,7 +78,7 @@ export default function SwipeableEdgeDrawer(props: Props) {
       <Global
         styles={{
           '.MuiDrawer-root > .MuiPaper-root': {
-            height: `calc(50% - ${drawerBleeding}px)`,
+            height: globalHeight,
             overflow: 'visible',
           },
         }}
@@ -102,11 +115,15 @@ export default function SwipeableEdgeDrawer(props: Props) {
           sx={{
             px: 2,
             pb: 2,
+            pt: 2,
             height: '100%',
             overflow: 'auto',
+            backgroundColor: 'rgb(243, 246, 249)',
           }}
         >
-          <Skeleton variant="rectangular" height="100%" />
+
+          <Carousel items={addresses.map(a => <AddressCard key={a.uuid} address={a} />)} />
+
         </StyledBox>
       </SwipeableDrawer>
     </Root>
