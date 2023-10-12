@@ -7,9 +7,7 @@ import { Drawer } from '@/lib/components/drawer';
 // providers
 import ThemeProvider from '@/lib/theme';
 import { AddressesProvider } from '@/lib/contexts/addresses';
-// services
-// services
-import { getAddresses } from '@/lib/services/getAddresses';
+
 
 export const metadata: Metadata = {
   title: 'Next Solar App',
@@ -21,7 +19,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const addresses = await getAddresses();
+
 
   return (
     <html lang="en">
@@ -30,7 +28,7 @@ export default async function RootLayout({
           <AddressesProvider>
             <Container component="main" maxWidth={false} disableGutters>
               <Header />
-              <Drawer addresses={addresses} />
+              <Drawer />
               {children}
 
             </Container>

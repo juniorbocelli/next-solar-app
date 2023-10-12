@@ -2,59 +2,56 @@
 
 import React, { useRef, useState } from 'react';
 // maps
-import GoogleMap, { Map, MapMarkersProps } from 'google-maps-react-markers';
+import GoogleMap, { Map } from 'google-maps-react-markers';
+// contexts
+import { useAddresses } from '@/lib/contexts/addresses';
 // components
 import { Marker } from '.';
+// @types
+import { IAddress } from '@/lib/@types/address';
 //
-import { HEADER_HEIGHT } from '@/config-global';
+import { HEADER_HEIGHT, GOOGLE_API_KEY } from '@/config-global';
 
 // ----------------------------------------------------------------------
 
-const AnyReactComponent = (props: any) => {
-  return (
-    <div style={{
-      color: 'white',
-      background: 'grey',
-      padding: '15px 10px',
-      display: 'inline-flex',
-      textAlign: 'center',
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderRadius: '100%',
-      transform: 'translate(-50%, -50%)'
-    }}>
-      {props.text}
-    </div>
-  );
-};
+interface SimpleMapProps {
+  addresses: IAddress[];
+}
 
-// ----------------------------------------------------------------------
-
-export default function SimpleMap() {
-  const mapRef = useRef(null);
+export default function SimpleMap(props: SimpleMapProps) {
+  const mapRef = useRef<Map | null>(null);
   const [mapReady, setMapReady] = useState(false);
+  const { handleAddressesChange } = useAddresses();
+  const { addresses } = props;
+
+  // Zoom control
+  const [zoom, setZoom] = useState<number>(5);
+
+  const handleZoomChange = (zoom: number) => {
+    setZoom(zoom)
+  };
 
   const onGoogleApiLoaded = ({ map, maps }: { map: Map, maps: Map }) => {
     mapRef.current = map;
     setMapReady(true);
+    handleAddressesChange(addresses);
   };
-
 
   return (
     <div style={{ height: `calc(100vh - ${HEADER_HEIGHT}px)`, width: '100%' }}>
       <GoogleMap
-        apiKey="AIzaSyDSbKFH_ZxHONzC59sQFAIZhV6FS5dzlT0"
+        apiKey={GOOGLE_API_KEY}
         defaultCenter={{ lat: -22.2265, lng: -54.7937 }}
         defaultZoom={5}
         onGoogleApiLoaded={onGoogleApiLoaded}
-        onChange={(map) => console.log('Map moved', map)}
+        onChange={(map) => handleZoomChange(map.zoom)}
       >
-        <Marker
-          lat={-22.2265335}
-          lng={-54.7937397}
-          text="My Marker"
-          zoom={10}
-        />
+        {
+          mapReady ?
+            addresses.map(a => <Marker key={a.uuid} lat={Number(a.latitude)} lng={Number(a.longitude)} address={a} zoom={zoom} />)
+            :
+            null
+        }
       </GoogleMap>
     </div>
   );

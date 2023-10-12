@@ -8,19 +8,19 @@ import { grey } from '@mui/material/colors';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import { IAddress } from '@/lib/@types/address';
 // components
 import { Carousel } from '../carousel';
 import { AddressCard } from '../card';
 // hooks
 import { useBreackpointTest } from '@/lib/hooks/useBreackpointTest';
+// contexts
+import { useAddresses } from '@/lib/contexts/addresses';
 
 // ----------------------------------------------------------------------
 
 const drawerBleeding = 56;
 
 interface Props {
-  addresses: IAddress[];
   window?: () => Window;
 }
 
@@ -53,8 +53,10 @@ const Puller = styled(Box)(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function SwipeableEdgeDrawer(props: Props) {
+  const { addresses } = useAddresses();
+
   const { smUp, mdUp } = useBreackpointTest()
-  const { window, addresses } = props;
+  const { window } = props;
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
