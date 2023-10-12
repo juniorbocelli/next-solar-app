@@ -22,7 +22,9 @@ export default function Header() {
           display: 'flex',
           alignItems: 'center',
           backgroundColor: theme.palette.grey[100],
-          py: 1
+          py: 1,
+          pb: 2,
+          height: 80
         }}
       >
         <FullLogo sx={{ mx: 1, mt: 1 }} />
