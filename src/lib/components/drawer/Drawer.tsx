@@ -13,7 +13,7 @@ import { IAddress } from '@/lib/@types/address';
 import { Carousel } from '../carousel';
 import { AddressCard } from '../card';
 // hooks
-import { useBreackpointTest } from '@/lib/utils/breackPointTest';
+import { useBreackpointTest } from '@/lib/hooks/useBreackpointTest';
 
 // ----------------------------------------------------------------------
 

@@ -8,15 +8,31 @@ import GoogleMapReact, { ChildComponentProps, } from 'google-map-react';
 interface Props extends ChildComponentProps {
   text: string;
 }
-const AnyReactComponent = (props: Props) => <div>{props.text}</div>;
+const AnyReactComponent = (props: Props) => {
+  return (
+    <div style={{
+      color: 'white',
+      background: 'grey',
+      padding: '15px 10px',
+      display: 'inline-flex',
+      textAlign: 'center',
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: '100%',
+      transform: 'translate(-50%, -50%)'
+    }}>
+      {props.text}
+    </div>
+  );
+};
 
 // ----------------------------------------------------------------------
 
 export default function SimpleMap() {
   const defaultProps = {
     center: {
-      lat: -22.2265335,
-      lng: -54.7937397
+      lat: -22.2265,
+      lng: -54.7937
     },
     zoom: 4
   };
