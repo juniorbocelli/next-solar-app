@@ -1,14 +1,16 @@
 'use client'
 
-import React from 'react';
-import GoogleMapReact, { ChildComponentProps, } from 'google-map-react';
+import React, { useRef, useState } from 'react';
+// maps
+import GoogleMap, { Map, MapMarkersProps } from 'google-maps-react-markers';
+// components
+import { Marker } from '.';
+//
+import { HEADER_HEIGHT } from '@/config-global';
 
 // ----------------------------------------------------------------------
 
-interface Props extends ChildComponentProps {
-  text: string;
-}
-const AnyReactComponent = (props: Props) => {
+const AnyReactComponent = (props: any) => {
   return (
     <div style={{
       color: 'white',
@@ -29,28 +31,31 @@ const AnyReactComponent = (props: Props) => {
 // ----------------------------------------------------------------------
 
 export default function SimpleMap() {
-  const defaultProps = {
-    center: {
-      lat: -22.2265,
-      lng: -54.7937
-    },
-    zoom: 4
+  const mapRef = useRef(null);
+  const [mapReady, setMapReady] = useState(false);
+
+  const onGoogleApiLoaded = ({ map, maps }: { map: Map, maps: Map }) => {
+    mapRef.current = map;
+    setMapReady(true);
   };
 
+
   return (
-    // Important! Always set the container height explicitly
-    <div style={{ height: '100vh', width: '100%' }}>
-      <GoogleMapReact
-        bootstrapURLKeys={{ key: "AIzaSyDSbKFH_ZxHONzC59sQFAIZhV6FS5dzlT0" }}
-        defaultCenter={defaultProps.center}
-        defaultZoom={defaultProps.zoom}
+    <div style={{ height: `calc(100vh - ${HEADER_HEIGHT}px)`, width: '100%' }}>
+      <GoogleMap
+        apiKey="AIzaSyDSbKFH_ZxHONzC59sQFAIZhV6FS5dzlT0"
+        defaultCenter={{ lat: -22.2265, lng: -54.7937 }}
+        defaultZoom={5}
+        onGoogleApiLoaded={onGoogleApiLoaded}
+        onChange={(map) => console.log('Map moved', map)}
       >
-        <AnyReactComponent
+        <Marker
           lat={-22.2265335}
           lng={-54.7937397}
           text="My Marker"
+          zoom={10}
         />
-      </GoogleMapReact>
+      </GoogleMap>
     </div>
   );
 }
