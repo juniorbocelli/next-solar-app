@@ -20,5 +20,5 @@ export type SettingsValueProps = {
 export type SettingsContextProps = SettingsValueProps & {
   // Mode
   onToggleMode: VoidFunction;
-  onChangeMode: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangeMode: (themeMode: 'light' | 'dark') => void;
 };

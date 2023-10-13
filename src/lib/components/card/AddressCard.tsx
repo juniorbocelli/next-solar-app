@@ -14,6 +14,8 @@ import { useAddresses } from '@/lib/contexts/addresses';
 // @types
 import { IAddress } from '@/lib/@types/address';
 
+import { varHover, varTranHover } from '@/lib/components/animate';
+
 interface AddressCardProps {
   address: IAddress
 };
@@ -34,8 +36,8 @@ export default function AddressCard(props: AddressCardProps) {
         mx: { xs: 0, sm: 1 },
         my: { xs: 1, sm: 0 },
         borderColor: (theme) => alpha(theme.palette.grey[500], 0.12),
-        bgcolor: (selectedAddress === null || selectedAddress.uuid !== address.uuid) ? 
-        theme.palette.background.paper : theme.palette.grey[300]
+        // bgcolor: (selectedAddress === null || selectedAddress.uuid !== address.uuid) ? 
+        // theme.palette.background.paper : undefined
       }}
       variant="outlined"
 

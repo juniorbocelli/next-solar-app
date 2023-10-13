@@ -1,31 +1,33 @@
 'use client';
+import * as React from 'react';
 // @mui
-import { RadioGroup } from '@mui/material';
-//
-import SvgColor from '@/lib/components/svg-color';
+import ToggleButton from '@mui/material/ToggleButton';
 import { useSettingsContext } from './SettingsContext';
-import { StyledCard, StyledWrap, MaskControl } from './styles';
+// @mui icons
+import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 
-// ----------------------------------------------------------------------
-
-const OPTIONS = ['light', 'dark'] as const;
-
-export default function ModeOptions() {
+export default function StandaloneToggleButton() {
   const { themeMode, onChangeMode } = useSettingsContext();
+  const [selected, setSelected] = React.useState(themeMode === 'light');
 
   return (
-    <RadioGroup name="themeMode" value={themeMode} onChange={onChangeMode}>
-      <StyledWrap>
-        {OPTIONS.map((mode) => (
-          <StyledCard key={mode} selected={themeMode === mode}>
-            <SvgColor
-              src={`/assets/icons/setting/${mode === 'light' ? 'ic_sun' : 'ic_moon'}.svg`}
-            />
+    <ToggleButton
+      value="check"
+      selected={selected}
+      onChange={() => {
+        setSelected(!selected);
+        onChangeMode(!selected ? 'light' : 'dark');
+      }}
 
-            <MaskControl value={mode} />
-          </StyledCard>
-        ))}
-      </StyledWrap>
-    </RadioGroup>
+      sx={{ width: 30, height: 30 }}
+    >
+      {
+        selected ?
+          <LightModeIcon />
+          :
+          <DarkModeIcon />
+      }
+    </ToggleButton>
   );
 }
