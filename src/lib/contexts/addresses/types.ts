@@ -5,6 +5,6 @@ export interface IUseAddressesContext {
   addresses: IAddress[];
   handleAddressesChange: (addresses: IAddress[]) => void;
 
-  selectedAddress: string | null;
-  handleSelectedAddressChange: (uuid: string) => void;
+  selectedAddress: IAddress | null;
+  handleSelectedAddressChange: (address: IAddress) => void;
 };

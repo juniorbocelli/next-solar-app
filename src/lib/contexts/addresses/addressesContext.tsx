@@ -15,14 +15,14 @@ const AddressesContext = createContext({} as IUseAddressesContext);
 
 export const AddressesProvider = ({ children }: { children: React.ReactNode }) => {
   const [addresses, setAddresses] = useState<IAddress[]>([]);
-  const [selectedAddress, setSelectedAddress] = useState<string | null>(null);
+  const [selectedAddress, setSelectedAddress] = useState<IAddress | null>(null);
 
   const handleAddressesChange = useCallback((addresses: IAddress[]) => {
     setAddresses(addresses);
   }, []);
 
-  const handleSelectedAddressChange = useCallback((uuid: string) => {
-    setSelectedAddress(uuid);
+  const handleSelectedAddressChange = useCallback((address: IAddress) => {
+    setSelectedAddress(address);
   }, []);
 
   return (
