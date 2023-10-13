@@ -43,22 +43,10 @@ const StyledBox = styled(Box)(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-const Puller = styled(Box)(({ theme }) => ({
-  width: 30,
-  height: 6,
-  backgroundColor: theme.palette.mode === 'light' ? grey[300] : grey[900],
-  borderRadius: 3,
-  position: 'absolute',
-  top: 8,
-  left: 'calc(50% - 15px)',
-}));
-
-// ----------------------------------------------------------------------
-
 export default function SwipeableEdgeDrawer(props: Props) {
-  const { addresses } = useAddresses();
+  const { addresses, selectedAddress } = useAddresses();
   const theme = useTheme();
-  const { smUp, mdUp } = useBreackpointTest()
+  const { smUp } = useBreackpointTest()
   const { window } = props;
   const [open, setOpen] = React.useState(false);
 
@@ -66,10 +54,12 @@ export default function SwipeableEdgeDrawer(props: Props) {
     setOpen(newOpen);
   };
 
-  // This is used only for the example
   const container = window !== undefined ? () => window().document.body : undefined;
-  // TODO
 
+  // Effects
+  React.useEffect(() => {
+    setOpen(false);
+  }, [selectedAddress]);
 
   const globalHeight = React.useMemo(() => {
     return open ? smUp ? 'auto' : `calc(90% - ${drawerBleeding}px)` : drawerBleeding;

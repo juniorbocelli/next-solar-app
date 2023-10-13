@@ -4,14 +4,13 @@ import React from 'react';
 import { alpha } from '@mui/material/styles';
 import {
   Paper,
-  CardContent,
   CardActionArea,
   Typography,
   Divider,
   useTheme
 } from '@mui/material';
-// components
-import { varHover, varTranHover } from '@/lib/components/animate';
+// contexts
+import { useAddresses } from '@/lib/contexts/addresses';
 // @types
 import { IAddress } from '@/lib/@types/address';
 
@@ -21,7 +20,12 @@ interface AddressCardProps {
 
 export default function AddressCard(props: AddressCardProps) {
   const { address } = props;
+  const { handleSelectedAddressChange, selectedAddress } = useAddresses();
   const theme = useTheme();
+
+  const handleCardClick = () => {
+    handleSelectedAddressChange(address);
+  };
 
   return (
     <Paper
@@ -30,8 +34,12 @@ export default function AddressCard(props: AddressCardProps) {
         mx: { xs: 0, sm: 1 },
         my: { xs: 1, sm: 0 },
         borderColor: (theme) => alpha(theme.palette.grey[500], 0.12),
+        bgcolor: (selectedAddress === null || selectedAddress.uuid !== address.uuid) ? 
+        theme.palette.background.paper : theme.palette.grey[300]
       }}
       variant="outlined"
+
+      onClick={handleCardClick}
     >
       <CardActionArea
         component={m.div}
