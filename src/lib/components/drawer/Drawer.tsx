@@ -46,7 +46,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
 export default function SwipeableEdgeDrawer(props: Props) {
   const { addresses, selectedAddress } = useAddresses();
   const theme = useTheme();
-  const { smUp } = useBreackpointTest()
+  const { smUp } = useBreackpointTest();
   const { window } = props;
   const [open, setOpen] = React.useState(false);
 
