@@ -2,6 +2,7 @@
 import { SimpleMap } from '@/lib/components/maps';
 // services
 import { getAddresses } from '@/lib/services/getAddresses';
+import { getSolarInformationsByAddress } from '@/lib/services/getSolarInformationsByAddress';
 
 // ----------------------------------------------------------------------
 

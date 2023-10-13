@@ -1,3 +1,4 @@
+'use client'
 import type { Metadata } from 'next';
 // @mui
 import { Container } from '@mui/material';
@@ -8,13 +9,14 @@ import { Drawer } from '@/lib/components/drawer';
 import ThemeProvider from '@/lib/theme';
 import { AddressesProvider } from '@/lib/contexts/addresses';
 
+// ----------------------------------------------------------------------
 
-export const metadata: Metadata = {
-  title: 'Next Solar App',
-  description: 'SolarApp Case',
-}
+// export const metadata: Metadata = {
+//   title: 'Next Solar App',
+//   description: 'SolarApp Case',
+// }
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
