@@ -15,3 +15,8 @@ export interface ISolarPanelConfigs {
 export interface ISolar {
   solarPanelConfigs: ISolarPanelConfigs[];
 };
+
+export interface ISolarSafe {
+  panelsCount: number;
+  yearlyEnergyDcKwh: number;
+};

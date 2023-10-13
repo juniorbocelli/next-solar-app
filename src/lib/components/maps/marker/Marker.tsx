@@ -18,6 +18,8 @@ import { useAddresses } from '@/lib/contexts/addresses';
 import useMarkerStates from './states';
 import useMarkerAPIs from './apis';
 import useMarkerEffects from './effects';
+//
+import { calculateCapacity } from '@/lib/utils/calculateSolar';
 
 // ----------------------------------------------------------------------
 
@@ -30,6 +32,7 @@ export default function Marker(props: MarkerProps) {
   const { address, zoom } = props;
 
   const states = useMarkerStates();
+  const { receivedData } = states;
   const apis = useMarkerAPIs(states);
   const effects = useMarkerEffects(apis);
   const { useFetchDataWhenSelectAddress } = effects;
@@ -46,6 +49,13 @@ export default function Marker(props: MarkerProps) {
     setAnchor(null);
     handleSelectedAddressChange(null);
   };
+
+  const calculate = () => {
+    if (receivedData !== null)
+      return calculateCapacity(receivedData);
+
+    return null;
+  }
 
   // Effects
   useFetchDataWhenSelectAddress(selectedAddress, address, handleOpen);
@@ -89,57 +99,36 @@ export default function Marker(props: MarkerProps) {
             {address.description}
           </Typography>
 
-          <Typography sx={{ fontWeight: 500 }} variant="h6">
-            Endereço
-          </Typography>
+          {
+            (receivedData !== null) ?
+              (
+                <>
+                  <Typography sx={{ fontWeight: 500, mb: 1 }} variant="h6">
+                    Capacidade do Local
+                  </Typography>
 
-          <Typography
-            sx={{
-              ml: 5,
-              fontSize: '0.9rem',
-              fontStyle: 'italic'
-            }}
-            variant="body2"
-            color="text.secondary"
-          >
-            {address.streetName}, {address.streetNumber}
-          </Typography>
+                  <Typography variant='body2' sx={{ mb: 0.5 }}>
+                    Número de painéis: <span style={{ fontWeight: 'bold' }}>{calculate()?.panelsCount}</span>
+                  </Typography>
 
-          <Typography
-            sx={{
-              ml: 5,
-              fontSize: '0.9rem',
-              fontStyle: 'italic'
-            }}
-            variant="body2"
-            color="text.secondary"
-          >
-            {address.neighbourhood}
-          </Typography>
+                  <Typography variant='body2' sx={{ mb: 3 }}>
+                    Kw economizados/ano: <span style={{ fontWeight: 'bold' }}>{Math.round(calculate()!?.yearlyEnergyDcKwh)}</span>
+                  </Typography>
+                </>
+              )
+              :
+              (
+                <>
+                  <Typography align="center" sx={{ fontSize: '3rem' }}>
+                    🚧
+                  </Typography>
 
-          <Typography
-            sx={{
-              ml: 5,
-              fontSize: '0.9rem',
-              fontStyle: 'italic'
-            }}
-            variant="body2"
-            color="text.secondary"
-          >
-            {address.city}-{address.state}
-          </Typography>
-
-          <Typography
-            sx={{
-              ml: 5,
-              fontSize: '0.9rem',
-              fontStyle: 'italic'
-            }}
-            variant="body2"
-            color="text.secondary"
-          >
-            CEP: {address.zipcode}
-          </Typography>
+                  <Typography align="center" sx={{ fontWeight: 'bold', mb: 3 }}>
+                    Ainda não temos dados para esse local...
+                  </Typography>
+                </>
+              )
+          }
 
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <Button color="primary" variant="soft" onClick={handleClose}>
