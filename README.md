@@ -3,6 +3,8 @@ Falta:
 - Trocar setinhas de abertura do drawer;
 - Ver problema com as setas do carousel;
 - Botão para trocar de tema;
+- Nome correto para as páginas;
+- Metadados corretos para as páginas;
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
