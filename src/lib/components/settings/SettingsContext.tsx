@@ -43,8 +43,7 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
   }, [setSettings, settings]);
 
   const onChangeMode = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const themeMode = event.target.value;
+    (themeMode: 'light' | 'dark') => {
       setSettings({ ...settings, themeMode });
     },
     [setSettings, settings]

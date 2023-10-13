@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 // components
 import { FullLogo } from '../logos';
+import { ModeOptionsToogle } from '../settings';
 
 // ----------------------------------------------------------------------
 
@@ -16,12 +17,12 @@ export default function Header() {
   const theme = createTheme();
 
   return (
-    <>
+    <Box sx={{ display: 'flex', justifyContent: 'space-between', pr: 1, alignItems: 'center' }}>
       <Box
         sx={{
           display: 'flex',
           alignItems: 'center',
-          backgroundColor: theme.palette.grey[100],
+          backgroundColor: theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.background.default,
           py: 1,
           pb: 2,
           height: 80
@@ -32,6 +33,8 @@ export default function Header() {
           Next Solar App
         </Typography>
       </Box>
-    </>
+
+      <ModeOptionsToogle />
+    </Box>
   );
 };

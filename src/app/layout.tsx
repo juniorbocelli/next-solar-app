@@ -6,6 +6,7 @@ import { Header } from '@/lib/components/headers';
 import { Drawer } from '@/lib/components/drawer';
 // providers
 import ThemeProvider from '@/lib/theme';
+import { SettingsProvider } from '@/lib/components/settings';
 import { AddressesProvider } from '@/lib/contexts/addresses';
 
 // ----------------------------------------------------------------------
@@ -24,16 +25,18 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body>
-        <ThemeProvider>
-          <AddressesProvider>
-            <Container component="main" maxWidth={false} disableGutters>
-              <Header />
-              <Drawer />
-              {children}
+        <SettingsProvider>
+          <ThemeProvider>
+            <AddressesProvider>
+              <Container component="main" maxWidth={false} disableGutters>
+                <Header />
+                <Drawer />
+                {children}
 
-            </Container>
-          </AddressesProvider>
-        </ThemeProvider>
+              </Container>
+            </AddressesProvider>
+          </ThemeProvider>
+        </SettingsProvider>
       </body>
     </html>
   );

@@ -136,7 +136,6 @@ export default function SwipeableEdgeDrawer(props: Props) {
             pt: 2,
             height: '100%',
             overflow: 'auto',
-            backgroundColor: 'rgb(243, 246, 249)',
           }}
         >
 
