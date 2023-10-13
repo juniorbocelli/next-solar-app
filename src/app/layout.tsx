@@ -1,4 +1,3 @@
-'use client'
 import type { Metadata } from 'next';
 // @mui
 import { Container } from '@mui/material';
@@ -11,20 +10,21 @@ import { AddressesProvider } from '@/lib/contexts/addresses';
 
 // ----------------------------------------------------------------------
 
-// export const metadata: Metadata = {
-//   title: 'Next Solar App',
-//   description: 'SolarApp Case',
-// }
+export const metadata: Metadata = {
+  title: 'Next Solar App',
+  description: 'SolarApp Case',
+}
 
 export default function RootLayout({
   children,
+  modal,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode,
+  modal: React.ReactNode,
 }) {
 
-
   return (
-    <html lang="en">
+    <html lang="pt-BR">
       <body>
         <ThemeProvider>
           <AddressesProvider>
@@ -36,6 +36,8 @@ export default function RootLayout({
             </Container>
           </AddressesProvider>
         </ThemeProvider>
+
+        {modal}
       </body>
     </html>
   );
