@@ -6,5 +6,5 @@ export interface IUseAddressesContext {
   handleAddressesChange: (addresses: IAddress[]) => void;
 
   selectedAddress: IAddress | null;
-  handleSelectedAddressChange: (address: IAddress) => void;
+  handleSelectedAddressChange: (address: IAddress | null) => void;
 };

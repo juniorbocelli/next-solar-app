@@ -21,7 +21,7 @@ export const AddressesProvider = ({ children }: { children: React.ReactNode }) =
     setAddresses(addresses);
   }, []);
 
-  const handleSelectedAddressChange = useCallback((address: IAddress) => {
+  const handleSelectedAddressChange = useCallback((address: IAddress | null) => {
     setSelectedAddress(address);
   }, []);
 
