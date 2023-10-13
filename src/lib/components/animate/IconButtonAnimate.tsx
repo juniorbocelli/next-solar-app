@@ -5,15 +5,15 @@ import { Box, IconButton, IconButtonProps } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
-const IconButtonAnimate = forwardRef<HTMLButtonElement, IconButtonProps>(
-  ({ children, size = 'medium', ...other }, ref) => (
+const IconButtonAnimate = forwardRef<HTMLButtonElement, IconButtonProps>(function IconButtonAnimate({ children, size = 'medium', ...other }, ref) {
+  return (
     <AnimateWrap size={size}>
       <IconButton size={size} ref={ref} {...other}>
         {children}
       </IconButton>
     </AnimateWrap>
-  )
-);
+  );
+});
 
 export default IconButtonAnimate;
 

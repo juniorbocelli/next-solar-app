@@ -9,15 +9,15 @@ export interface FabButtonAnimateProps extends FabProps {
   sxWrap?: SxProps;
 }
 
-const FabButtonAnimate = forwardRef<HTMLButtonElement, FabButtonAnimateProps>(
-  ({ size = 'large', children, sx, sxWrap, ...other }, ref) => (
+const FabButtonAnimate = forwardRef<HTMLButtonElement, FabButtonAnimateProps>(function FabButtonAnimate({ size = 'large', children, sx, sxWrap, ...other }, ref) {
+  return (
     <AnimateWrap size={size} sxWrap={sxWrap}>
       <Fab ref={ref} size={size} sx={sx} {...other}>
         {children}
       </Fab>
     </AnimateWrap>
-  )
-);
+  );
+});
 
 export default FabButtonAnimate;
 
