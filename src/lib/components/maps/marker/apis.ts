@@ -8,9 +8,15 @@ import { getSolarInformationsByAddress } from '@/lib/services/getSolarInformatio
 
 export default function useMarkerAPIs(states: IUseMarkerStates): IUseMarkerAPIs {
   const getSolarInfo = async (lat: number, lng: number) => {
-    const data = await getSolarInformationsByAddress(lat, lng);
+    const { setReceivedData } = states;
 
-    states.setReceivedData(data);
+    try {
+      const data = await getSolarInformationsByAddress(lat, lng);
+      console.log('data', data);
+      setReceivedData(data);
+    } catch (e) {
+      setReceivedData(null);
+    };
   };
 
   return {

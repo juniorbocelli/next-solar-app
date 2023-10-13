@@ -13,7 +13,7 @@ export default function useMarkerEffects(apis: IUseMarkerAPIs): IUseMarkerEffect
         callback();
       };
 
-    }, [selectedAddress, address.uuid, callback]);
+    }, [selectedAddress, address.uuid]);
   };
 
   return {
