@@ -1,16 +1,23 @@
 'use client'
 import React from 'react';
 // @mui
-import { Popover, Typography, Box } from '@mui/material';
+import { Button, Typography, Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 // @mui icons
 import SolarPowerIcon from '@mui/icons-material/SolarPower';
 // components
-import Iconify from '../iconify/Iconify';
-import MenuPopover from '../popover';
+import Iconify from '../../iconify/Iconify';
+import MenuPopover from '../../popover';
 // @types
 import { ILatLng } from '@/lib/@types/map';
 import { IAddress } from '@/lib/@types/address';
+import { ISolar } from '@/lib/@types/solar';
+// contexts
+import { useAddresses } from '@/lib/contexts/addresses';
+// hooks
+import useMarkerStates from './states';
+import useMarkerAPIs from './apis';
+import useMarkerEffects from './effects';
 
 // ----------------------------------------------------------------------
 
@@ -22,17 +29,26 @@ interface MarkerProps extends ILatLng {
 export default function Marker(props: MarkerProps) {
   const { address, zoom } = props;
 
+  const states = useMarkerStates();
+  const apis = useMarkerAPIs(states);
+  const effects = useMarkerEffects(apis);
+  const { useFetchDataWhenSelectAddress } = effects;
+
+  const { selectedAddress, handleSelectedAddressChange } = useAddresses();
+
+  const iconRef = React.useRef<HTMLElement | null>(null);
   const [anchor, setAnchor] = React.useState<HTMLElement | null>(null);
 
-  const handleOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchor(event.currentTarget);
+  const handleOpen = () => {
+    setAnchor(iconRef.current);
   };
-
   const handleClose = () => {
     setAnchor(null);
+    handleSelectedAddressChange(null);
   };
 
-  console.log('zoom', zoom);
+  // Effects
+  useFetchDataWhenSelectAddress(selectedAddress, address, handleOpen);
 
   const Title = React.useCallback(() => {
     if (zoom > 14) {
@@ -59,11 +75,15 @@ export default function Marker(props: MarkerProps) {
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <div>
-        <Iconify icon="openmoji:solar-energy" sx={{ width: 60, height: 60, }} onClick={handleOpen} />
-      </div>
+      <Box ref={iconRef}>
+        <Iconify icon="openmoji:solar-energy" sx={{ width: 60, height: 60, }} />
+      </Box>
 
-      <MenuPopover open={anchor} onClose={handleClose} arrow={'bottom-center'}>
+      <MenuPopover
+        open={(selectedAddress === null || selectedAddress.uuid !== address.uuid) ? null : anchor}
+        onClose={handleClose}
+        arrow={'bottom-center'}
+      >
         <Box sx={{ p: 2, maxWidth: 280 }}>
           <Typography variant="subtitle1" gutterBottom>
             {address.description}
@@ -121,6 +141,11 @@ export default function Marker(props: MarkerProps) {
             CEP: {address.zipcode}
           </Typography>
 
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Button color="primary" variant="soft" onClick={handleClose}>
+              Fechar
+            </Button>
+          </Box>
         </Box>
       </MenuPopover>
 

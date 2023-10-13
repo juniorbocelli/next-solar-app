@@ -5,13 +5,13 @@ import { GOOGLE_API_KEY } from '@/config-global';
 
 export async function getSolarInformationsByAddress(lat: number, lng: number): Promise<ISolar | null> {
   const response = await fetch(`https://solar.googleapis.com/v1/buildingInsights:findClosest?location.latitude=${lat}&location.longitude=${lng}&requiredQuality=IMAGERY_QUALITY_UNSPECIFIED&key=${GOOGLE_API_KEY}`);
-  const solarPanelConfigs = await response.json();
+  const data = await response.json();
 
-  if (!solarPanelConfigs)
+  if (!data)
     return null
 
-  if (typeof solarPanelConfigs.error !== "undefined")
+  if (typeof data.solarPanelConfigs === "undefined")
     return null;
 
-  return solarPanelConfigs;
+  return { solarPanelConfigs: data.solarPanelConfigs };
 };

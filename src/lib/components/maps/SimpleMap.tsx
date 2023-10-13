@@ -9,11 +9,17 @@ import { useAddresses } from '@/lib/contexts/addresses';
 import { Marker } from '.';
 // @types
 import { IAddress } from '@/lib/@types/address';
-import { IMapConfiguration } from './types';
+import { ILatLng } from '@/lib/@types/map';
 //
 import { HEADER_HEIGHT, GOOGLE_API_KEY } from '@/config-global';
 
 // ----------------------------------------------------------------------
+
+export interface IMapConfiguration {
+  zoom: number;
+
+  position: ILatLng
+};
 
 interface SimpleMapProps {
   addresses: IAddress[];
