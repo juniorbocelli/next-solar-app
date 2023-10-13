@@ -16,7 +16,7 @@ import { HEADER_HEIGHT, GOOGLE_API_KEY } from '@/config-global';
 
 interface SimpleMapProps {
   addresses: IAddress[];
-}
+};
 
 export default function SimpleMap(props: SimpleMapProps) {
   const mapRef = useRef<Map | null>(null);
@@ -48,7 +48,13 @@ export default function SimpleMap(props: SimpleMapProps) {
       >
         {
           mapReady ?
-            addresses.map(a => <Marker key={a.uuid} lat={Number(a.latitude)} lng={Number(a.longitude)} address={a} zoom={zoom} />)
+            addresses.map(a => (<Marker
+              key={a.uuid}
+              lat={Number(a.latitude)}
+              lng={Number(a.longitude)}
+              address={a}
+              zoom={zoom}
+            />))
             :
             null
         }
