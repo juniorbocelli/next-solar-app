@@ -9,15 +9,15 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 
 export default function StandaloneToggleButton() {
   const { themeMode, onChangeMode } = useSettingsContext();
-  const [selected, setSelected] = React.useState(themeMode === 'light');
+  const [mode, setMode] = React.useState<'light' | 'dark'>(themeMode);
 
   return (
     <ToggleButton
       value="check"
-      selected={selected}
+      selected={mode === 'light'}
       onChange={() => {
-        setSelected(!selected);
-        onChangeMode(!selected ? 'light' : 'dark');
+        setMode(mode === 'light' ? 'dark' : 'light');
+        onChangeMode(mode === 'light' ? 'dark' : 'light');
       }}
 
       sx={{
@@ -28,7 +28,7 @@ export default function StandaloneToggleButton() {
       }}
     >
       {
-        selected ?
+        mode === 'light' ?
           <DarkModeIcon sx={{
             color: 'white',
           }} />

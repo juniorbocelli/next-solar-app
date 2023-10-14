@@ -1,3 +1,4 @@
+'use client'
 // hook
 import useResponsive from '@/lib/hooks/useResponsive';
 
