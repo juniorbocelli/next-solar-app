@@ -16,6 +16,14 @@ import { useBreackpointTest } from '@/lib/hooks/useBreackpointTest';
 export default function Header() {
   const { smUp } = useBreackpointTest();
 
+  const [hasMounted, setHasMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
+  if (!hasMounted) return null
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
