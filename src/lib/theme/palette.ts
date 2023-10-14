@@ -40,7 +40,7 @@ const PRIMARY = {
   main: '#2196f3',  // 500
   dark: '#1976d2',  // 700
   darker: '#0d47a1',  // 900
-  contrastText: '#000',
+  contrastText: '#fff',
 };
 
 const SECONDARY = {

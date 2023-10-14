@@ -13,12 +13,14 @@ interface Props {
 
 export default function FullLogo({ sx }: Props) {
   const { smUp } = useBreackpointTest();
+  const HEIGHT = 60;
+
   return (
     <Box sx={{ ...sx }}>
       <Image
-        width={smUp ? 50 : 45}
-        height={smUp ? 50 : 45}
-        src="/logo.jpeg"
+        height={HEIGHT}
+        width={(HEIGHT * 321) / 197}
+        src="/logo.png"
         alt="Logo"
       />
     </Box>

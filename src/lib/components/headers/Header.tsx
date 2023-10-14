@@ -5,27 +5,36 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-
 // components
-import { FullLogo } from '../logos';
+import { FullLogo } from '../logo';
 import { ModeOptionsToogle } from '../settings';
+// hooks
+import { useBreackpointTest } from '@/lib/hooks/useBreackpointTest';
 
 // ----------------------------------------------------------------------
 
 export default function Header() {
+  const { smUp } = useBreackpointTest();
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <FullLogo sx={{ py: 0.7, mr: 1 }} />
+          <FullLogo sx={{ py: 1, mr: 1 }} />
 
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Next Solar App
-          </Typography>
+          {
+            !smUp ? null :
+              (
+                <Typography
+                  variant="h4"
+                  component="div"
+                >
+                  Next Solar App
+                </Typography>
+              )
+          }
+
+          <Box sx={{ flexGrow: 1 }} />
 
           <ModeOptionsToogle />
         </Toolbar>

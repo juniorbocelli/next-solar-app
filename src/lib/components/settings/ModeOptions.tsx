@@ -20,13 +20,20 @@ export default function StandaloneToggleButton() {
         onChangeMode(!selected ? 'light' : 'dark');
       }}
 
-      sx={{ width: 30, height: 30 }}
+      sx={{
+        width: 30,
+        height: 30,
+        color: 'white',
+        border: '1px solid #fff'
+      }}
     >
       {
         selected ?
-          <LightModeIcon />
+          <DarkModeIcon sx={{
+            color: 'white',
+          }} />
           :
-          <DarkModeIcon />
+          <LightModeIcon />
       }
     </ToggleButton>
   );
