@@ -1,19 +1,20 @@
 import React from 'react';
 import {
   IUseMarkerEffects,
-  IUseMarkerAPIs
+  IUseMarkerAPIs,
 } from './types';
 import { IAddress } from '@/lib/@types/address';
 
 export default function useMarkerEffects(apis: IUseMarkerAPIs): IUseMarkerEffects {
-  const useFetchDataWhenSelectAddress = (selectedAddress: IAddress | null, address: IAddress, callback: () => void) => {
+  const useFetchDataWhenSelectAddress = (selectedAddress: IAddress | null, addressUuid: string) => {
+    const { getSolarInfo } = apis;
+
     React.useEffect(() => {
-      if (selectedAddress !== null && selectedAddress.uuid === address.uuid) {
-        apis.getSolarInfo(Number(selectedAddress.latitude), Number(selectedAddress.longitude));
-        callback();
+      if (selectedAddress !== null && selectedAddress.uuid === addressUuid) {
+        getSolarInfo(Number(selectedAddress.latitude), Number(selectedAddress.longitude));
       };
 
-    }, [selectedAddress, address.uuid]);
+    }, [selectedAddress, addressUuid, getSolarInfo]);
   };
 
   return {

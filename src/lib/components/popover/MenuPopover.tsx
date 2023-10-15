@@ -9,6 +9,7 @@ import { MenuPopoverProps } from './types';
 // ----------------------------------------------------------------------
 
 export default function MenuPopover({
+  anchor,
   open,
   children,
   arrow = 'top-right',
@@ -20,8 +21,8 @@ export default function MenuPopover({
 
   return (
     <Popover
-      open={Boolean(open)}
-      anchorEl={open}
+      open={open}
+      anchorEl={anchor}
       anchorOrigin={anchorOrigin as PopoverOrigin}
       transformOrigin={transformOrigin as PopoverOrigin}
       PaperProps={{

@@ -7,9 +7,18 @@ import { IAddress } from '@/lib/@types/address';
  * STATES
  */
 export type ReceivedDataState = ISolar | null;
+export type IsQueryingAPIState = boolean;
+export type OpenState = boolean;
+
 export interface IUseMarkerStates {
   receivedData: ReceivedDataState;
-  setReceivedData: React.Dispatch<React.SetStateAction<ReceivedDataState>>;
+  handleReceivedDataChange: (receivedData: ReceivedDataState) => void;
+
+  isQueryingAPI: IsQueryingAPIState;
+  handleIsQueryingAPIChange: (isQueryingAPI: IsQueryingAPIState) => void;
+
+  open: OpenState;
+  handleOpenChange: (open: OpenState) => void;
 };
 
 /**
@@ -23,5 +32,5 @@ export interface IUseMarkerAPIs {
  * EFFECTS
  */
 export interface IUseMarkerEffects {
-  useFetchDataWhenSelectAddress: (selectedAddres: IAddress | null, address: IAddress, callback: () => void) => void;
+  useFetchDataWhenSelectAddress: (selectedAddres: IAddress | null, addressUuid: string) => void;
 };

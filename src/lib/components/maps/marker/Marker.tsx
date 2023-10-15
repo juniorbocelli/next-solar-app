@@ -1,10 +1,11 @@
 'use client'
 import React from 'react';
 // @mui
-import { Button, Typography, Box } from '@mui/material';
-import { styled } from '@mui/material/styles';
-// @mui icons
-import SolarPowerIcon from '@mui/icons-material/SolarPower';
+import {
+  Button,
+  Typography,
+  Box,
+} from '@mui/material';
 // components
 import Iconify from '../../iconify/Iconify';
 import MenuPopover from '../../popover';
@@ -29,26 +30,34 @@ interface MarkerProps extends ILatLng {
 };
 
 export default function Marker(props: MarkerProps) {
+  // zoom props control the local name exibition
   const { address, zoom } = props;
+  const position = {
+    lat: Number(address.latitude),
+    lng: Number(address.longitude),
+  }
 
-  const states = useMarkerStates();
-  const { receivedData } = states;
-  const apis = useMarkerAPIs(states);
-  const effects = useMarkerEffects(apis);
-  const { useFetchDataWhenSelectAddress } = effects;
+  // ref to icon
+  const iconRef = React.useRef<HTMLElement | null>(null);
 
+  // context
   const { selectedAddress, handleSelectedAddressChange } = useAddresses();
 
-  const iconRef = React.useRef<HTMLElement | null>(null);
-  const [anchor, setAnchor] = React.useState<HTMLElement | null>(null);
+  // hooks
+  const states = useMarkerStates();
+  const {
+    isQueryingAPI,
+    open,
+    receivedData,
+    handleOpenChange,
+  } = states;
 
-  const handleOpen = () => {
-    setAnchor(iconRef.current);
-  };
-  const handleClose = () => {
-    setAnchor(null);
-    handleSelectedAddressChange(null);
-  };
+  const apis = useMarkerAPIs(states);
+
+  const effects = useMarkerEffects(apis);
+  const { useFetchDataWhenSelectAddress } = effects;
+  useFetchDataWhenSelectAddress(selectedAddress, address.uuid);
+
 
   const handleClick = () => {
     handleSelectedAddressChange(address);
@@ -59,10 +68,7 @@ export default function Marker(props: MarkerProps) {
       return calculateCapacity(receivedData);
 
     return null;
-  }
-
-  // Effects
-  useFetchDataWhenSelectAddress(selectedAddress, address, handleOpen);
+  };
 
   const Title = React.useCallback(() => {
     if (zoom > 14) {
@@ -98,8 +104,9 @@ export default function Marker(props: MarkerProps) {
       </Box>
 
       <MenuPopover
-        open={(selectedAddress === null || selectedAddress.uuid !== address.uuid) ? null : anchor}
-        onClose={handleClose}
+        open={open}
+        anchor={iconRef.current}
+        onClose={() => handleOpenChange(false)}
         arrow={'bottom-center'}
       >
         <Box sx={{ p: 2, maxWidth: 280 }}>
@@ -108,38 +115,47 @@ export default function Marker(props: MarkerProps) {
           </Typography>
 
           {
-            (receivedData !== null) ?
+            isQueryingAPI ?
               (
                 <>
-                  <Typography sx={{ fontWeight: 500, mb: 1 }} variant="h6">
-                    Capacidade do Local
-                  </Typography>
-
-                  <Typography variant='body2' sx={{ mb: 0.5 }}>
-                    Número de painéis: <span style={{ fontWeight: 'bold' }}>{calculate()?.panelsCount}</span>
-                  </Typography>
-
-                  <Typography variant='body2' sx={{ mb: 3 }}>
-                    Kw economizados/ano: <span style={{ fontWeight: 'bold' }}>{Math.round(calculate()!?.yearlyEnergyDcKwh)}</span>
+                  <Typography sx={{ mb: 3 }}>
+                    Carregando dados...
                   </Typography>
                 </>
               )
               :
-              (
-                <>
-                  <Typography align="center" sx={{ fontSize: '3rem' }}>
-                    🚧
-                  </Typography>
+              (receivedData !== null) ?
+                (
+                  <>
+                    <Typography sx={{ fontWeight: 500, mb: 1 }} variant="h6">
+                      Capacidade do Local
+                    </Typography>
 
-                  <Typography align="center" sx={{ fontWeight: 'bold', mb: 3 }}>
-                    Ainda não temos dados para esse local...
-                  </Typography>
-                </>
-              )
+                    <Typography variant='body2' sx={{ mb: 0.5 }}>
+                      Número de painéis: <span style={{ fontWeight: 'bold' }}>{calculate()?.panelsCount}</span>
+                    </Typography>
+
+                    <Typography variant='body2' sx={{ mb: 3 }}>
+                      Kw economizados/ano: <span style={{ fontWeight: 'bold' }}>{Math.round(calculate()!?.yearlyEnergyDcKwh)}</span>
+                    </Typography>
+                  </>
+                )
+                :
+                (
+                  <>
+                    <Typography align="center" sx={{ fontSize: '3rem' }}>
+                      🚧
+                    </Typography>
+
+                    <Typography align="center" sx={{ fontWeight: 'bold', mb: 3 }}>
+                      Ainda não temos dados para esse local...
+                    </Typography>
+                  </>
+                )
           }
 
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Button color="primary" variant="soft" size="small" onClick={handleClose}>
+            <Button color="primary" variant="soft" size="small" onClick={() => handleOpenChange(false)}>
               Fechar
             </Button>
           </Box>

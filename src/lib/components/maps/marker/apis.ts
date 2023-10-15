@@ -1,25 +1,44 @@
+import React from 'react';
 // @types
 import {
   IUseMarkerAPIs,
-  IUseMarkerStates
+  IUseMarkerStates,
 } from './types';
 // services
 import { getSolarInformationsByAddress } from '@/lib/services/getSolarInformationsByAddress';
 
 export default function useMarkerAPIs(states: IUseMarkerStates): IUseMarkerAPIs {
-  const getSolarInfo = async (lat: number, lng: number) => {
-    const { setReceivedData } = states;
+  const {
+    handleOpenChange,
+    handleIsQueryingAPIChange,
+    handleReceivedDataChange,
+  } = states;
 
-    try {
-      const data = await getSolarInformationsByAddress(lat, lng);
-      console.log('data', data);
-      setReceivedData(data);
-    } catch (e) {
-      setReceivedData(null);
-    };
-  };
+  const getSolarInfo = React.useCallback(async (lat: number, lng: number) => {
+    handleIsQueryingAPIChange(true);
+    handleOpenChange(true);
+
+    getSolarInformationsByAddress(lat, lng)
+      .then((data) => {
+        if (process.env.NODE_ENV === 'development')
+          console.log('getSolarInformationsByAddress', data);
+
+        // has success
+        handleReceivedDataChange(data);
+      })
+      .catch((e) => {
+        if (process.env.NODE_ENV === 'development')
+          console.log('getSolarInformationsByAddress', e);
+
+        // has error
+        handleReceivedDataChange(null);
+      })
+      .finally(() => {
+        handleIsQueryingAPIChange(false);
+      });
+  }, [handleIsQueryingAPIChange, handleOpenChange, handleReceivedDataChange]);
 
   return {
     getSolarInfo,
-  }
+  };
 };
