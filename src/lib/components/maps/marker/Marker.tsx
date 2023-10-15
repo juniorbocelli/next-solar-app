@@ -50,6 +50,10 @@ export default function Marker(props: MarkerProps) {
     handleSelectedAddressChange(null);
   };
 
+  const handleClick = () => {
+    handleSelectedAddressChange(address);
+  };
+
   const calculate = () => {
     if (receivedData !== null)
       return calculateCapacity(receivedData);
@@ -86,7 +90,11 @@ export default function Marker(props: MarkerProps) {
   return (
     <Box sx={{ display: 'flex' }}>
       <Box ref={iconRef}>
-        <Iconify icon="openmoji:solar-energy" sx={{ width: 60, height: 60, }} />
+        <Iconify
+          icon="openmoji:solar-energy"
+          sx={{ width: 60, height: 60, cursor: 'pointer' }}
+          onClick={handleClick}
+        />
       </Box>
 
       <MenuPopover
@@ -131,7 +139,7 @@ export default function Marker(props: MarkerProps) {
           }
 
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Button color="primary" variant="soft" onClick={handleClose}>
+            <Button color="primary" variant="soft" size="small" onClick={handleClose}>
               Fechar
             </Button>
           </Box>
