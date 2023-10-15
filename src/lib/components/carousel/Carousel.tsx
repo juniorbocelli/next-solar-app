@@ -58,7 +58,7 @@ function SlickArrowLeft({ currentSlide, slideCount, ...props }: CustomArrowProps
 
 function SlickArrowRight({ currentSlide, slideCount, slidesToShow, ...props }: CustomArrowProps & { slidesToShow: number }) {
   const theme = useTheme();
-  console.log('slideCount', slideCount, (Number(currentSlide) + 5))
+
   return (
     <div
       {...props}

@@ -10,7 +10,6 @@ import { MenuPopoverProps } from './types';
 
 export default function MenuPopover({
   anchor,
-  open,
   children,
   arrow = 'top-right',
   disabledArrow,
@@ -21,7 +20,7 @@ export default function MenuPopover({
 
   return (
     <Popover
-      open={open}
+      open={Boolean(anchor)}
       anchorEl={anchor}
       anchorOrigin={anchorOrigin as PopoverOrigin}
       transformOrigin={transformOrigin as PopoverOrigin}

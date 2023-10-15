@@ -44,7 +44,7 @@ export default function SimpleMap(props: SimpleMapProps) {
   // Handle selectedAddress change
   React.useEffect(() => {
     // Alter map config when address is selected
-    if (selectedAddress !== null) {
+    if (selectedAddress !== null && mapReady) {
       const lat = Number(selectedAddress.latitude);
       const lng = Number(selectedAddress.longitude);
 
@@ -52,7 +52,7 @@ export default function SimpleMap(props: SimpleMapProps) {
       mapRef.current.setZoom(19);
     };
 
-  }, [selectedAddress]);
+  }, [selectedAddress, mapReady]);
 
   // Zoom control
   const [zoom, setZoom] = useState<number>(5);
@@ -65,8 +65,6 @@ export default function SimpleMap(props: SimpleMapProps) {
     mapRef.current = map;
     setMapReady(true);
     handleAddressesChange(addresses);
-
-    console.log('mapRef.current', mapRef.current);
 
     // disable controls in mobile
     if (!smUp)

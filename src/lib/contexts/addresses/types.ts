@@ -1,5 +1,6 @@
 'use client'
 import { IAddress } from "@/lib/@types/address";
+import { ISolar } from "@/lib/@types/solar";
 
 export interface IUseAddressesContext {
   addresses: IAddress[];
@@ -7,4 +8,7 @@ export interface IUseAddressesContext {
 
   selectedAddress: IAddress | null;
   handleSelectedAddressChange: (address: IAddress | null) => void;
+
+  solarInfo: ISolar | null;
+  handleSolarInfoChange: (solarInfo: ISolar | null) => void;
 };

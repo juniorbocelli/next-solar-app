@@ -1,3 +1,6 @@
+import React from 'react';
+
 export * from './types';
 
-export { default } from './MenuPopover';
+const MenuPopover = React.memo(React.lazy(() => import('./MenuPopover')));
+export { MenuPopover };

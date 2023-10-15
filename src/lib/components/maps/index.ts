@@ -1,2 +1,2 @@
 export { default as SimpleMap } from './SimpleMap';
-export { default as Marker } from './marker/Marker';
+export { default as Marker } from './Marker';

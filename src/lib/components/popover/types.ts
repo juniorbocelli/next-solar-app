@@ -19,7 +19,6 @@ export type MenuPopoverArrowValue =
 
 export interface MenuPopoverProps extends Omit<PopoverProps, 'open'> {
   anchor: HTMLElement | null;
-  open: boolean;
   arrow?: MenuPopoverArrowValue;
   disabledArrow?: boolean;
 }

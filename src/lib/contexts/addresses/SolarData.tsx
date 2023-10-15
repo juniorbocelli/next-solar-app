@@ -14,5 +14,21 @@ interface SolarDataProps {
 };
 
 export default function SolarData(props: SolarDataProps) {
-  return (<></>)
+  const { address, solarData } = props;
+  const [hasMounted, setHasMounted] = React.useState(false);
+
+  const {
+    handleSelectedAddressChange,
+    handleSolarInfoChange
+  } = useAddresses();
+
+
+  React.useEffect(() => {
+    handleSelectedAddressChange(address);
+    handleSolarInfoChange(solarData);
+    setHasMounted(true);
+  }, [solarData, handleSolarInfoChange, address, handleSelectedAddressChange]);
+
+  if (!hasMounted) return null
+  return (<></>);
 };

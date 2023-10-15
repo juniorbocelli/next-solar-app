@@ -8,6 +8,7 @@ import {
 // @types
 import { IAddress } from '@/lib/@types/address';
 import { IUseAddressesContext } from './types';
+import { ISolar } from '@/lib/@types/solar';
 
 // ----------------------------------------------------------------------
 
@@ -16,6 +17,7 @@ const AddressesContext = createContext({} as IUseAddressesContext);
 export const AddressesProvider = ({ children }: { children: React.ReactNode }) => {
   const [addresses, setAddresses] = useState<IAddress[]>([]);
   const [selectedAddress, setSelectedAddress] = useState<IAddress | null>(null);
+  const [solarInfo, setSolarInfo] = useState<ISolar | null>(null);
 
   const handleAddressesChange = useCallback((addresses: IAddress[]) => {
     setAddresses(addresses);
@@ -25,8 +27,22 @@ export const AddressesProvider = ({ children }: { children: React.ReactNode }) =
     setSelectedAddress(address);
   }, []);
 
+  const handleSolarInfoChange = useCallback((solarInfo: ISolar | null) => {
+    setSolarInfo(solarInfo);
+  }, []);
+
   return (
-    <AddressesContext.Provider value={{ addresses, handleAddressesChange, selectedAddress, handleSelectedAddressChange }}>
+    <AddressesContext.Provider
+      value={{
+        addresses,
+        handleAddressesChange,
+
+        selectedAddress,
+        handleSelectedAddressChange,
+
+        solarInfo,
+        handleSolarInfoChange,
+      }}>
       {children}
     </AddressesContext.Provider>
   );
