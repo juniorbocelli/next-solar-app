@@ -14,6 +14,7 @@ import { ILatLng } from '@/lib/@types/map';
 import { useBreackpointTest } from '@/lib/hooks/useBreackpointTest';
 //
 import { HEADER_HEIGHT, GOOGLE_API_KEY } from '@/config-global';
+import { ISolar } from '@/lib/@types/solar';
 
 // ----------------------------------------------------------------------
 
@@ -24,15 +25,19 @@ export interface IMapConfiguration {
 
 interface SimpleMapProps {
   addresses: IAddress[];
+  solarInfo: ISolar | null;
+  selectedAddress: IAddress | null;
 };
 
 export default function SimpleMap(props: SimpleMapProps) {
-  const mapRef = useRef<Map | null>(null);
-  const [mapReady, setMapReady] = useState(false);
-  const { handleAddressesChange, selectedAddress } = useAddresses();
-  const { smUp } = useBreackpointTest();
-  const { addresses } = props;
+  const {
+    addresses,
+    solarInfo,
+    selectedAddress,
+  } = props;
 
+  // Layout control
+  const { smUp } = useBreackpointTest();
   const defaultConfiguration: IMapConfiguration = {
     zoom: 5,
     position: {
@@ -41,18 +46,15 @@ export default function SimpleMap(props: SimpleMapProps) {
     },
   };
 
-  // Handle selectedAddress change
-  React.useEffect(() => {
-    // Alter map config when address is selected
-    if (selectedAddress !== null && mapReady) {
-      const lat = Number(selectedAddress.latitude);
-      const lng = Number(selectedAddress.longitude);
+  // Map control
+  const mapRef = useRef<Map | null>(null);
+  const [mapReady, setMapReady] = useState(false);
 
-      mapRef.current.setCenter({ lat, lng });
-      mapRef.current.setZoom(19);
-    };
-
-  }, [selectedAddress, mapReady]);
+  // Contexts
+  const {
+    handleAddressesChange,
+    handleSolarInfoChange,
+  } = useAddresses();
 
   // Zoom control
   const [zoom, setZoom] = useState<number>(5);
@@ -61,10 +63,23 @@ export default function SimpleMap(props: SimpleMapProps) {
     setZoom(zoom)
   };
 
+
+  // When map is read
   const onGoogleApiLoaded = ({ map, maps }: { map: Map, maps: Map }) => {
+    // map controll
     mapRef.current = map;
     setMapReady(true);
     handleAddressesChange(addresses);
+    handleSolarInfoChange(solarInfo);
+
+    // Alter map config when address is selected
+    if (selectedAddress !== null) {
+      const lat = Number(selectedAddress.latitude);
+      const lng = Number(selectedAddress.longitude);
+
+      mapRef.current.setCenter({ lat, lng });
+      mapRef.current.setZoom(19);
+    };
 
     // disable controls in mobile
     if (!smUp)
@@ -92,9 +107,10 @@ export default function SimpleMap(props: SimpleMapProps) {
         lat={Number(a.latitude)}
         lng={Number(a.longitude)}
         address={a}
+        selectedAddress={selectedAddress?.uuid === a.uuid ? selectedAddress : null}
       />))
     )
-  }, [addresses]);
+  }, [addresses, selectedAddress]);
 
   return (
     <div style={{ height: `calc(100vh - ${HEADER_HEIGHT}px)`, width: '100%' }}>
@@ -107,7 +123,13 @@ export default function SimpleMap(props: SimpleMapProps) {
       >
         {
           mapReady ?
-            Markers
+          addresses.map(a => (<Marker
+            key={a.uuid}
+            lat={Number(a.latitude)}
+            lng={Number(a.longitude)}
+            address={a}
+            selectedAddress={selectedAddress?.uuid === a.uuid ? selectedAddress : null}
+          />))
             :
             null
         }

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 // components
 import { AlertDialog } from '@/lib/components/modal-dialog';
 import { SolarData } from '@/lib/contexts/addresses';
+import { SimpleMap } from '@/lib/components/maps';
 // services
 import { getAddresses } from '@/lib/services/getAddresses';
 import { getSolarInformationsByAddress } from '@/lib/services/getSolarInformationsByAddress';
@@ -46,6 +47,6 @@ export default async function AddressDetailsPage({
   const solarInfo: ISolar | null = await getSolarInformationsByAddress(Number(address.latitude), Number(address.longitude));
 
   return (
-    <SolarData address={address} solarData={solarInfo} />
+    <SimpleMap addresses={addresses} selectedAddress={address} solarInfo={solarInfo} />
   );
 }

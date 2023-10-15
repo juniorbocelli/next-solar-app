@@ -18,7 +18,6 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode,
 }) {
-  const addresses = await getAddresses();
 
   return (
     <html lang="pt-BR">
@@ -29,7 +28,7 @@ export default async function RootLayout({
               <Container component="main" maxWidth={false} disableGutters>
                 <Header />
                 <SlideNavigation />
-                <SimpleMap addresses={addresses} />
+                
                 {children}
 
               </Container>

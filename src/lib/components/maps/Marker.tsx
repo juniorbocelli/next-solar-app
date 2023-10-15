@@ -22,41 +22,41 @@ import { calculateCapacity } from '@/lib/utils/calculateSolar';
 
 interface MarkerProps extends ILatLng {
   address: IAddress;
+  selectedAddress: IAddress | null;
 };
 
 export default function Marker(props: MarkerProps) {
   // zoom props control the local name exibition
-  const { address } = props;
+  const { address, selectedAddress } = props;
   const router = useRouter();
 
   // ref to icon
   const iconRef = React.useRef<HTMLElement | null>(null);
-  const [anchor, setAnchor] = React.useState<HTMLElement | null>(null);
+  const [anchor, setAnchor] = React.useState<HTMLElement | null>(selectedAddress?.uuid === address.uuid ? iconRef.current : null);
 
   // context
   const {
-    selectedAddress,
-    handleSelectedAddressChange,
-
     solarInfo,
     handleSolarInfoChange,
+    handleSelectedAddressChange,
   } = useAddresses();
 
   const handleOpen = () => {
     setAnchor(iconRef.current);
   };
   const handleClose = () => {
-    handleSelectedAddressChange(null);
     handleSolarInfoChange(null);
     setAnchor(null);
   };
 
+  // Effects
   React.useEffect(() => {
     if (selectedAddress !== null)
-      if (selectedAddress.uuid === address.uuid)
-        handleOpen()
-  }, [selectedAddress, address.uuid]);
-
+      if (selectedAddress.uuid === address.uuid) {
+        handleOpen();
+        handleSelectedAddressChange(selectedAddress);
+      };
+  }, [address.uuid, selectedAddress, handleSelectedAddressChange]);
 
   const handleClick = () => {
     router.push(`/address/${address.uuid}`);
@@ -71,7 +71,7 @@ export default function Marker(props: MarkerProps) {
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <Box ref={selectedAddress?.uuid === address.uuid ? iconRef : null}>
+      <Box ref={iconRef}>
         <Iconify
           icon="openmoji:solar-energy"
           sx={{ width: 60, height: 60, cursor: 'pointer' }}
