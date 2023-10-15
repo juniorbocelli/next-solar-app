@@ -137,7 +137,10 @@ export default function SwipeableEdgeDrawer(props: Props) {
           }}
         >
 
-          <Carousel items={addresses.map(a => <AddressCard key={a.uuid} address={a} />)} />
+          <Carousel
+            items={addresses.map(a => <AddressCard key={a.uuid} address={a} />)}
+            slidesToShow={5}
+          />
 
         </StyledBox>
       </SwipeableDrawer>

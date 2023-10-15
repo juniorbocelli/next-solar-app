@@ -10,6 +10,8 @@ import { Marker } from '.';
 // @types
 import { IAddress } from '@/lib/@types/address';
 import { ILatLng } from '@/lib/@types/map';
+// hooks
+import { useBreackpointTest } from '@/lib/hooks/useBreackpointTest';
 //
 import { HEADER_HEIGHT, GOOGLE_API_KEY } from '@/config-global';
 
@@ -17,7 +19,6 @@ import { HEADER_HEIGHT, GOOGLE_API_KEY } from '@/config-global';
 
 export interface IMapConfiguration {
   zoom: number;
-
   position: ILatLng
 };
 
@@ -29,6 +30,7 @@ export default function SimpleMap(props: SimpleMapProps) {
   const mapRef = useRef<Map | null>(null);
   const [mapReady, setMapReady] = useState(false);
   const { handleAddressesChange, selectedAddress } = useAddresses();
+  const { smUp } = useBreackpointTest();
   const { addresses } = props;
 
   const defaultConfiguration: IMapConfiguration = {
@@ -41,13 +43,14 @@ export default function SimpleMap(props: SimpleMapProps) {
 
   // Handle selectedAddress change
   React.useEffect(() => {
+    // Alter map config when address is selected
     if (selectedAddress !== null) {
       const lat = Number(selectedAddress.latitude);
       const lng = Number(selectedAddress.longitude);
 
       mapRef.current.setCenter({ lat, lng });
       mapRef.current.setZoom(19);
-    }
+    };
 
   }, [selectedAddress]);
 
@@ -62,6 +65,26 @@ export default function SimpleMap(props: SimpleMapProps) {
     mapRef.current = map;
     setMapReady(true);
     handleAddressesChange(addresses);
+
+    console.log('mapRef.current', mapRef.current);
+
+    // disable controls in mobile
+    if (!smUp)
+      mapRef.current.setOptions({
+        disableDefaultUI: true,
+      });
+
+    // Disable zoom control buttons
+    mapRef.current.setOptions({
+      zoomControl: true,
+      zoomControlOptions: {
+        position: maps.ControlPosition.RIGHT_CENTER,
+      },
+      treetViewControl: true,
+      streetViewControlOptions: {
+        position: maps.ControlPosition.LEFT_TOP,
+      },
+    });
   };
 
   return (

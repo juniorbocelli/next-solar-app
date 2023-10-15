@@ -1,20 +1,15 @@
-import type { Metadata } from 'next';
 // @mui
 import { Container } from '@mui/material';
 // components
 import { Header } from '@/lib/components/headers';
 import { Drawer } from '@/lib/components/drawer';
+import { SlideNavigation } from '@/lib/components/navigation/SlideNavigation';
 // providers
 import ThemeProvider from '@/lib/theme';
 import { SettingsProvider } from '@/lib/components/settings';
 import { AddressesProvider } from '@/lib/contexts/addresses';
 
 // ----------------------------------------------------------------------
-
-export const metadata: Metadata = {
-  title: 'Next Solar App',
-  description: 'SolarApp Case',
-}
 
 export default function RootLayout({
   children,
@@ -30,7 +25,7 @@ export default function RootLayout({
             <AddressesProvider>
               <Container component="main" maxWidth={false} disableGutters>
                 <Header />
-                <Drawer />
+                <SlideNavigation />
                 {children}
 
               </Container>
