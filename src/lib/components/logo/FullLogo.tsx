@@ -3,8 +3,6 @@ import React from 'react';
 import Image from 'next/image';
 // @mui
 import { Box, SxProps } from '@mui/material';
-// hooks
-import { useBreackpointTest } from '@/lib/hooks/useBreackpointTest';
 
 // ----------------------------------------------------------------------
 
@@ -13,7 +11,6 @@ interface Props {
 };
 
 export default function FullLogo({ sx }: Props) {
-  const { smUp } = useBreackpointTest();
   const HEIGHT = 60;
 
   return (

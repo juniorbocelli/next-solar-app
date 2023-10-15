@@ -1,5 +1,6 @@
 import { m } from 'framer-motion';
 import React from 'react';
+import { useRouter } from 'next/navigation';
 // @mui
 import { alpha } from '@mui/material/styles';
 import {
@@ -9,12 +10,8 @@ import {
   Divider,
   useTheme
 } from '@mui/material';
-// contexts
-import { useAddresses } from '@/lib/contexts/addresses';
 // @types
 import { IAddress } from '@/lib/@types/address';
-
-import { varHover, varTranHover } from '@/lib/components/animate';
 
 interface AddressCardProps {
   address: IAddress
@@ -22,11 +19,11 @@ interface AddressCardProps {
 
 export default function AddressCard(props: AddressCardProps) {
   const { address } = props;
-  const { handleSelectedAddressChange, selectedAddress } = useAddresses();
   const theme = useTheme();
+  const router = useRouter();
 
   const handleCardClick = () => {
-    handleSelectedAddressChange(address);
+    router.push(`/address/${address.uuid}`);
   };
 
   return (
@@ -36,8 +33,6 @@ export default function AddressCard(props: AddressCardProps) {
         mx: { xs: 0, sm: 1 },
         my: { xs: 1, sm: 0 },
         borderColor: (theme) => alpha(theme.palette.grey[500], 0.12),
-        // bgcolor: (selectedAddress === null || selectedAddress.uuid !== address.uuid) ? 
-        // theme.palette.background.paper : undefined
       }}
       variant="outlined"
 

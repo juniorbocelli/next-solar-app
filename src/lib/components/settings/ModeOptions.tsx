@@ -24,7 +24,6 @@ export default function StandaloneToggleButton() {
         width: 30,
         height: 30,
         color: 'white',
-        border: '1px solid #fff'
       }}
     >
       {

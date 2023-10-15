@@ -1,6 +1,6 @@
 'use client'
 import React from 'react';
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
 // @mui
 import {
   Button,
@@ -22,16 +22,16 @@ import { calculateCapacity } from '@/lib/utils/calculateSolar';
 
 interface MarkerProps extends ILatLng {
   address: IAddress;
-  zoom: number;
 };
 
 export default function Marker(props: MarkerProps) {
   // zoom props control the local name exibition
-  const { address, zoom } = props;
+  const { address } = props;
   const router = useRouter();
 
   // ref to icon
   const iconRef = React.useRef<HTMLElement | null>(null);
+  const [anchor, setAnchor] = React.useState<HTMLElement | null>(null);
 
   // context
   const {
@@ -42,20 +42,19 @@ export default function Marker(props: MarkerProps) {
     handleSolarInfoChange,
   } = useAddresses();
 
-  const [anchor, setAchor] = React.useState<HTMLElement | null>(null);
   const handleOpen = () => {
-    setAchor(iconRef.current);
+    setAnchor(iconRef.current);
   };
   const handleClose = () => {
-    setAchor(null);
     handleSelectedAddressChange(null);
     handleSolarInfoChange(null);
+    setAnchor(null);
   };
 
   React.useEffect(() => {
     if (selectedAddress !== null)
       if (selectedAddress.uuid === address.uuid)
-        handleOpen();
+        handleOpen()
   }, [selectedAddress, address.uuid]);
 
 
@@ -70,32 +69,9 @@ export default function Marker(props: MarkerProps) {
     return null;
   };
 
-  const Title = React.useCallback(() => {
-    if (zoom > 14) {
-      return (
-        <Typography
-          sx={{
-            minWidth: 250,
-            fontWeight: 'bold',
-            text: 'red',
-            textShadow: `2px 0 #fff, -2px 0 #fff, 0 2px #fff, 0 -2px #fff,
-            1px 1px #fff, -1px -1px #fff, 1px -1px #fff, -1px 1px #fff`
-          }}
-          border="-moz-initial"
-          borderColor="white"
-          color="primary.dark"
-        >
-          {address.description}
-        </Typography>
-      );
-    } else {
-      return null;
-    }
-  }, [zoom, address.description]);
-
   return (
     <Box sx={{ display: 'flex' }}>
-      <Box ref={iconRef}>
+      <Box ref={selectedAddress?.uuid === address.uuid ? iconRef : null}>
         <Iconify
           icon="openmoji:solar-energy"
           sx={{ width: 60, height: 60, cursor: 'pointer' }}
@@ -151,9 +127,19 @@ export default function Marker(props: MarkerProps) {
           </Box>
         </Box>
       </MenuPopover>
-
-      <Title />
-
+      <Typography
+        sx={{
+          minWidth: 250,
+          fontWeight: 'bold',
+          textShadow: `2px 0 #fff, -2px 0 #fff, 0 2px #fff, 0 -2px #fff,
+            1px 1px #fff, -1px -1px #fff, 1px -1px #fff, -1px 1px #fff`
+        }}
+        border="-moz-initial"
+        borderColor="white"
+        color="primary.dark"
+      >
+        {address.description}
+      </Typography>
     </Box>
   );
 };
