@@ -2,20 +2,23 @@
 import { Container } from '@mui/material';
 // components
 import { Header } from '@/lib/components/headers';
-import { Drawer } from '@/lib/components/drawer';
+import { SimpleMap } from '@/lib/components/maps';
 import { SlideNavigation } from '@/lib/components/navigation/SlideNavigation';
 // providers
 import ThemeProvider from '@/lib/theme';
 import { SettingsProvider } from '@/lib/components/settings';
 import { AddressesProvider } from '@/lib/contexts/addresses';
+// services
+import { getAddresses } from '@/lib/services/getAddresses';
 
 // ----------------------------------------------------------------------
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode,
 }) {
+  const addresses = await getAddresses();
 
   return (
     <html lang="pt-BR">
@@ -26,6 +29,7 @@ export default function RootLayout({
               <Container component="main" maxWidth={false} disableGutters>
                 <Header />
                 <SlideNavigation />
+                <SimpleMap addresses={addresses} />
                 {children}
 
               </Container>

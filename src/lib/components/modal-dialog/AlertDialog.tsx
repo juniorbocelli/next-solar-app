@@ -1,4 +1,5 @@
-import React from 'react';
+'use client'
+import React, { useState } from 'react';
 // @mui
 import {
   Button,
@@ -20,7 +21,7 @@ interface IAlertDialogProps {
   content: React.ReactNode;
   size?: 'lg' | 'md' | 'sm' | 'xl' | 'xs' | false;
   open: boolean;
-  onClose: () => void;
+  onClose?: () => void;
 
   dialogProps?: DialogProps;
   buttonProps?: ButtonProps;
@@ -42,13 +43,18 @@ export default function AlertDialog(props: IAlertDialogProps) {
   } = props;
 
   const handleClose = () => {
-    onClose();
+    if (onClose)
+      onClose();
+    else
+      setInternalOpen(false);
   };
+
+  const [internalOpen, setInternalOpen] = useState<boolean>(open);
 
   return (
     <Dialog
       id={id}
-      open={open}
+      open={typeof onClose !== 'undefined' ? open : internalOpen}
       onClose={handleClose}
       maxWidth={size || 'sm'}
       fullWidth

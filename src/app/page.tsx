@@ -13,9 +13,8 @@ export const metadata: Metadata = {
 }
 
 export default async function HomePage() {
-  const addresses = await getAddresses();
 
   return (
-    <SimpleMap addresses={addresses} />
+    <></>
   );
 }
