@@ -100,18 +100,6 @@ export default function SimpleMap(props: SimpleMapProps) {
     });
   };
 
-  const Markers = React.useMemo(() => {
-    return (
-      addresses.map(a => (<Marker
-        key={a.uuid}
-        lat={Number(a.latitude)}
-        lng={Number(a.longitude)}
-        address={a}
-        selectedAddress={selectedAddress?.uuid === a.uuid ? selectedAddress : null}
-      />))
-    )
-  }, [addresses, selectedAddress]);
-
   return (
     <div style={{ height: `calc(100vh - ${HEADER_HEIGHT}px)`, width: '100%' }}>
       <GoogleMap
@@ -123,13 +111,16 @@ export default function SimpleMap(props: SimpleMapProps) {
       >
         {
           mapReady ?
-          addresses.map(a => (<Marker
-            key={a.uuid}
-            lat={Number(a.latitude)}
-            lng={Number(a.longitude)}
-            address={a}
-            selectedAddress={selectedAddress?.uuid === a.uuid ? selectedAddress : null}
-          />))
+            addresses.map(a => (<Marker
+              key={a.uuid}
+              lat={Number(a.latitude)}
+              lng={Number(a.longitude)}
+              address={a}
+              selectedAddress={selectedAddress?.uuid === a.uuid ? selectedAddress : null}
+              solarInfo={selectedAddress?.uuid === a.uuid ? solarInfo : null}
+              // Description display depends on zoom
+              zoom={zoom}
+            />))
             :
             null
         }

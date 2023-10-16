@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 // components
-import { AlertDialog } from '@/lib/components/modal-dialog';
+import { PageErrorDialog } from '@/lib/components/modal-dialog';
 import { SolarData } from '@/lib/contexts/addresses';
 import { SimpleMap } from '@/lib/components/maps';
 // services
@@ -42,7 +42,13 @@ export default async function AddressDetailsPage({
   const address = recognizeAddress(addresses, uuid);
 
   if (address === null)
-    throw new Error("O endereço informado não existe!")
+    return (
+      <PageErrorDialog
+        title="Erro"
+        content="O endereço não foi encontrado"
+        redirectTo="/"
+      />
+    );
 
   const solarInfo: ISolar | null = await getSolarInformationsByAddress(Number(address.latitude), Number(address.longitude));
 

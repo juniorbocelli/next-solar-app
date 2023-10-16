@@ -13,6 +13,7 @@ import { MenuPopover } from '../popover';
 // @types
 import { ILatLng } from '@/lib/@types/map';
 import { IAddress } from '@/lib/@types/address';
+import { ISolar } from '@/lib/@types/solar';
 // contexts
 import { useAddresses } from '@/lib/contexts/addresses';
 //
@@ -23,11 +24,18 @@ import { calculateCapacity } from '@/lib/utils/calculateSolar';
 interface MarkerProps extends ILatLng {
   address: IAddress;
   selectedAddress: IAddress | null;
+  solarInfo: ISolar | null;
+  zoom: number;
 };
 
 export default function Marker(props: MarkerProps) {
   // zoom props control the local name exibition
-  const { address, selectedAddress } = props;
+  const {
+    address,
+    selectedAddress,
+    solarInfo,
+    zoom,
+  } = props;
   const router = useRouter();
 
   // ref to icon
@@ -36,8 +44,6 @@ export default function Marker(props: MarkerProps) {
 
   // context
   const {
-    solarInfo,
-    handleSolarInfoChange,
     handleSelectedAddressChange,
   } = useAddresses();
 
@@ -45,7 +51,6 @@ export default function Marker(props: MarkerProps) {
     setAnchor(iconRef.current);
   };
   const handleClose = () => {
-    handleSolarInfoChange(null);
     setAnchor(null);
   };
 
@@ -68,6 +73,30 @@ export default function Marker(props: MarkerProps) {
 
     return null;
   };
+
+  // Description display depends on zoom
+  const Title = React.useCallback(() => {
+    if (zoom > 14) {
+      return (
+        <Typography
+          sx={{
+            minWidth: 250,
+            fontWeight: 'bold',
+            text: 'red',
+            textShadow: `2px 0 #fff, -2px 0 #fff, 0 2px #fff, 0 -2px #fff,
+            1px 1px #fff, -1px -1px #fff, 1px -1px #fff, -1px 1px #fff`
+          }}
+          border="-moz-initial"
+          borderColor="white"
+          color="primary.dark"
+        >
+          {address.description}
+        </Typography>
+      );
+    } else {
+      return null;
+    }
+  }, [zoom, address.description]);
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -138,7 +167,7 @@ export default function Marker(props: MarkerProps) {
         borderColor="white"
         color="primary.dark"
       >
-        {address.description}
+        <Title />
       </Typography>
     </Box>
   );
