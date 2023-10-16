@@ -40,7 +40,6 @@ export default function Header() {
             sx={{
               display: 'flex',
               alignItems: 'center',
-              flexGrow: 1,
               cursor: 'pointer'
             }}
           >
@@ -58,6 +57,8 @@ export default function Header() {
                 )
             }
           </Box>
+
+          <Box sx={{ flexGrow: 1, }} />
 
           <ModeOptionsToogle />
         </Toolbar>
