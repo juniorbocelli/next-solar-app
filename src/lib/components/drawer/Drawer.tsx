@@ -47,7 +47,7 @@ export default function SwipeableEdgeDrawer(props: Props) {
   const theme = useTheme();
   const { smUp } = useBreackpointTest();
   const { window } = props;
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
@@ -57,7 +57,8 @@ export default function SwipeableEdgeDrawer(props: Props) {
 
   // Effects
   React.useEffect(() => {
-    setOpen(false);
+    if (selectedAddress !== null)
+      setOpen(false);
   }, [selectedAddress]);
 
   const globalHeight = React.useMemo(() => {
