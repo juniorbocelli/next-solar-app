@@ -36,7 +36,7 @@ export default function AddressCard(props: AddressCardProps) {
         mx: { xs: 0, sm: 1 },
         my: { xs: 1, sm: 0 },
         bgColor: (theme) => alpha(theme.palette.grey[500], 0.12),
-        backgroundColor: (selectedAddress?.uuid === address.uuid) ? alpha(theme.palette.grey[500], 0.12) : undefined,
+        backgroundColor: {xs: undefined, md: (selectedAddress?.uuid === address.uuid) ? alpha(theme.palette.grey[500], 0.12) : undefined},
       }}
       variant="outlined"
 
