@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next Solar App
 
-## Getting Started
+Sistema construído usando **Next.js 13**, **MUI 5** e escrito em **TypeScript**. Nele é possível se cadastrar verificar dados de capacidade de geração de energia solar, vindos da **Google API**, e navegar por um mapa a medida que os endereços são selecionados.
 
-First, run the development server:
+As especificações completas estão [aqui](https://drive.google.com/file/d/18Z2MTSWSJLYXhA-GeRKkCr5UERzOLPi4/view?usp=sharing).
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Existe um deploy desse projeto em [https://next-solar-app.vercel.app/](https://next-solar-app.vercel.app/).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+O roteamento utilizado foi o novo sistema do **Next 13** usando a pasta *app*. Apesar da API fornecida disponibilizar apenas a lista de endereços, a função *generateStaticParams()* pôde ser usada, de forma que todas as páginas do sistema se servem de dados armazenados em cachê.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+O sistema conta com dois temas: *light* e *dark* e é totalmente compatível com dispositivos mobile.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Como Executar
 
-## Learn More
+Existe uma infinidade de maneira de executar o projeto dependendo da *IDE* utilizada durante o desenvolvimento. Alguns recursos foram desenvolvidos para facilitar a execução e para fins didáticos.
 
-To learn more about Next.js, take a look at the following resources:
+#### 1) Criar arquivo .env.local
+A primeira coisa a fazer é criar um arquivo *.env.local* (ou *.env* para deploy) com o conteúdo:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+    NEXT_PUBLIC_GOOGLE_API_KEY="Sua chave da Google API"
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+#### 1) Instalar os pacotes necessários
 
-## Deploy on Vercel
+    npm  -i
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+ou
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+    yarn  install
+
+#### 2) Compilar e executar o projeto
+
+##### Compilar
+
+    npm  run  build
+
+ou
+
+    yarn  build
+
+##### Executar
+
+    npm  run  start
+
+ou
+
+    yarn  start
+
+*Obs: É possível executar o projeto sem compilá-lo, executando *npm run dev* (ou *yarn dev*), porém o desempenho da execução é inferior ao do projeto compilado.*
+
+O sistema deve estar rodando em [http://localhost:3000/](http://localhost:3000/).
+
+## Dúvidas?
+
+Qualquer dúvida: entrar em contato através do e-mail *juniorbocelli.com* ou WhatsApp (16) 99123-9505.
