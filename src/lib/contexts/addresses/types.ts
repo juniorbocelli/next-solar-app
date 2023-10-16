@@ -8,7 +8,4 @@ export interface IUseAddressesContext {
 
   selectedAddress: IAddress | null;
   handleSelectedAddressChange: (address: IAddress | null) => void;
-
-  solarInfo: ISolar | null;
-  handleSolarInfoChange: (solarInfo: ISolar | null) => void;
 };

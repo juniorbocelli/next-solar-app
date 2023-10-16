@@ -1,7 +1,5 @@
-import type { Metadata } from 'next';
 // components
 import { PageErrorDialog } from '@/lib/components/modal-dialog';
-import { SolarData } from '@/lib/contexts/addresses';
 import { SimpleMap } from '@/lib/components/maps';
 // services
 import { getAddresses } from '@/lib/services/getAddresses';
@@ -12,11 +10,6 @@ import { ISolar } from '@/lib/@types/solar';
 import { recognizeAddress } from '@/lib/utils/recognize-address';
 
 // ----------------------------------------------------------------------
-
-export const metadata: Metadata = {
-  title: 'Next Solar App',
-  description: 'SolarApp Case',
-};
 
 // Cache google api data
 export async function generateStaticParams() {

@@ -53,7 +53,6 @@ export default function SimpleMap(props: SimpleMapProps) {
   // Contexts
   const {
     handleAddressesChange,
-    handleSolarInfoChange,
   } = useAddresses();
 
   // Zoom control
@@ -70,7 +69,6 @@ export default function SimpleMap(props: SimpleMapProps) {
     mapRef.current = map;
     setMapReady(true);
     handleAddressesChange(addresses);
-    handleSolarInfoChange(solarInfo);
 
     // Alter map config when address is selected
     if (selectedAddress !== null) {
