@@ -10,6 +10,8 @@ import {
   Divider,
   useTheme
 } from '@mui/material';
+// context
+import { useAddresses } from '@/lib/contexts/addresses';
 // @types
 import { IAddress } from '@/lib/@types/address';
 
@@ -21,6 +23,7 @@ export default function AddressCard(props: AddressCardProps) {
   const { address } = props;
   const theme = useTheme();
   const router = useRouter();
+  const { selectedAddress } = useAddresses();
 
   const handleCardClick = () => {
     router.push(`/address/${address.uuid}`);
@@ -32,7 +35,8 @@ export default function AddressCard(props: AddressCardProps) {
         maxWidth: 350,
         mx: { xs: 0, sm: 1 },
         my: { xs: 1, sm: 0 },
-        borderColor: (theme) => alpha(theme.palette.grey[500], 0.12),
+        bgColor: (theme) => alpha(theme.palette.grey[500], 0.12),
+        backgroundColor: (selectedAddress?.uuid === address.uuid) ? alpha(theme.palette.grey[500], 0.12) : undefined,
       }}
       variant="outlined"
 
