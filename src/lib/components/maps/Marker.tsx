@@ -112,6 +112,7 @@ export default function Marker(props: MarkerProps) {
         anchor={anchor}
         onClose={handleClose}
         arrow={'bottom-center'}
+        onWheel={handleClose}
       >
         <Box sx={{ p: 2, maxWidth: 280 }}>
           <Typography variant="subtitle1" gutterBottom>
