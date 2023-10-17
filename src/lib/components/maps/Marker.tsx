@@ -14,8 +14,6 @@ import { MenuPopover } from '../popover';
 import { ILatLng } from '@/lib/@types/map';
 import { IAddress } from '@/lib/@types/address';
 import { ISolar } from '@/lib/@types/solar';
-// contexts
-import { useAddresses } from '@/lib/contexts/addresses';
 //
 import { calculateCapacity } from '@/lib/utils/calculateSolar';
 
@@ -40,12 +38,7 @@ export default function Marker(props: MarkerProps) {
 
   // ref to icon
   const iconRef = React.useRef<HTMLElement | null>(null);
-  const [anchor, setAnchor] = React.useState<HTMLElement | null>(selectedAddress?.uuid === address.uuid ? iconRef.current : null);
-
-  // context
-  const {
-    handleSelectedAddressChange,
-  } = useAddresses();
+  const [anchor, setAnchor] = React.useState<HTMLElement | null>(null);
 
   const handleOpen = () => {
     setAnchor(iconRef.current);
@@ -56,12 +49,15 @@ export default function Marker(props: MarkerProps) {
 
   // Effects
   React.useEffect(() => {
-    if (selectedAddress !== null)
+    if (selectedAddress !== null) {
       if (selectedAddress.uuid === address.uuid) {
         handleOpen();
-        handleSelectedAddressChange(selectedAddress);
       };
-  }, [address.uuid, selectedAddress, handleSelectedAddressChange]);
+
+    } else {
+      setAnchor(null);
+    }
+  }, [selectedAddress, address.uuid]);
 
   const handleClick = () => {
     router.push(`/address/${address.uuid}`);
@@ -98,8 +94,12 @@ export default function Marker(props: MarkerProps) {
     }
   }, [zoom, address.description]);
 
+
+  const renderLoader = () => <p>Loading</p>;
+
   return (
     <Box sx={{ display: 'flex' }}>
+
       <Box ref={iconRef}>
         <Iconify
           icon="openmoji:solar-energy"
@@ -108,55 +108,59 @@ export default function Marker(props: MarkerProps) {
         />
       </Box>
 
-      <MenuPopover
-        anchor={anchor}
-        onClose={handleClose}
-        arrow={'bottom-center'}
-        onWheel={handleClose}
-      >
-        <Box sx={{ p: 2, maxWidth: 280 }}>
-          <Typography variant="subtitle1" gutterBottom>
-            {address.description}
-          </Typography>
 
-          {
-            (solarInfo !== null) ?
-              (
-                <>
-                  <Typography sx={{ fontWeight: 500, mb: 1 }} variant="h6">
-                    Capacidade do Local
-                  </Typography>
+      <React.Suspense fallback={renderLoader()}>
+        <MenuPopover
+          anchor={anchor}
+          onClose={handleClose}
+          arrow={'bottom-center'}
+          onWheel={handleClose}
+        >
+          <Box sx={{ p: 2, maxWidth: 280 }}>
+            <Typography variant="subtitle1" gutterBottom>
+              {address.description}
+            </Typography>
 
-                  <Typography variant='body2' sx={{ mb: 0.5 }}>
-                    Número de painéis: <span style={{ fontWeight: 'bold' }}>{calculate()?.panelsCount}</span>
-                  </Typography>
+            {
+              (solarInfo !== null) ?
+                (
+                  <>
+                    <Typography sx={{ fontWeight: 500, mb: 1 }} variant="h6">
+                      Capacidade do Local
+                    </Typography>
 
-                  <Typography variant='body2' sx={{ mb: 3 }}>
-                    Kw economizados/ano: <span style={{ fontWeight: 'bold' }}>{Math.round(calculate()!?.yearlyEnergyDcKwh)}</span>
-                  </Typography>
-                </>
-              )
-              :
-              (
-                <>
-                  <Typography align="center" sx={{ fontSize: '3rem' }}>
-                    🚧
-                  </Typography>
+                    <Typography variant='body2' sx={{ mb: 0.5 }}>
+                      Número de painéis: <span style={{ fontWeight: 'bold' }}>{calculate()?.panelsCount}</span>
+                    </Typography>
 
-                  <Typography align="center" sx={{ fontWeight: 'bold', mb: 3 }}>
-                    Ainda não temos dados para esse local...
-                  </Typography>
-                </>
-              )
-          }
+                    <Typography variant='body2' sx={{ mb: 3 }}>
+                      Kw economizados/ano: <span style={{ fontWeight: 'bold' }}>{Math.round(calculate()!?.yearlyEnergyDcKwh)}</span>
+                    </Typography>
+                  </>
+                )
+                :
+                (
+                  <>
+                    <Typography align="center" sx={{ fontSize: '3rem' }}>
+                      🚧
+                    </Typography>
 
-          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Button color="primary" variant="soft" size="small" onClick={handleClose}>
-              Fechar
-            </Button>
+                    <Typography align="center" sx={{ fontWeight: 'bold', mb: 3 }}>
+                      Ainda não temos dados para esse local...
+                    </Typography>
+                  </>
+                )
+            }
+
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              <Button color="primary" variant="soft" size="small" onClick={handleClose}>
+                Fechar
+              </Button>
+            </Box>
           </Box>
-        </Box>
-      </MenuPopover>
+        </MenuPopover>
+      </React.Suspense>
+
       <Typography
         sx={{
           minWidth: 250,
@@ -168,8 +172,9 @@ export default function Marker(props: MarkerProps) {
         borderColor="white"
         color="primary.dark"
       >
-        <Title />
       </Typography>
+
+      <Title />
     </Box>
   );
 };
