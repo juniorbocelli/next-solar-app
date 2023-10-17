@@ -35,7 +35,7 @@ export function SlideNavigation(props: SlideNavigationProps) {
               px: 1
             }}
           >
-            <Carousel items={addresses.map(a => <AddressCard key={a.uuid} address={a} />)} slidesToShow={1} />
+            <Carousel addresses={addresses} slidesToShow={1} />
           </Box>
       }
     </div>

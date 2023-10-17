@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 // context
 import { useAddresses } from '@/lib/contexts/addresses';
+import { useSettingsContext } from '../settings';
 // @types
 import { IAddress } from '@/lib/@types/address';
 
@@ -22,6 +23,7 @@ interface AddressCardProps {
 export default function AddressCard(props: AddressCardProps) {
   const { address } = props;
   const theme = useTheme();
+  const {themeMode} = useSettingsContext();
   const router = useRouter();
   const { selectedAddress } = useAddresses();
 
@@ -35,8 +37,12 @@ export default function AddressCard(props: AddressCardProps) {
         maxWidth: 350,
         mx: { xs: 0, sm: 1 },
         my: { xs: 1, sm: 0 },
-        bgColor: (theme) => alpha(theme.palette.grey[500], 0.12),
-        backgroundColor: {sx: undefined, md: (selectedAddress?.uuid === address.uuid) ? alpha(theme.palette.grey[500], 0.12) : undefined},
+        bgColor: (selectedAddress?.uuid === address.uuid) ? (theme) => alpha(theme.palette.grey[500], 1) :(theme) => alpha(theme.palette.grey[500], 0.12),
+        backgroundColor: {
+          xs: (selectedAddress?.uuid === address.uuid) ? 
+          (themeMode=== 'light' ? alpha(theme.palette.grey[300], 1) : alpha(theme.palette.grey[700], 1)) : undefined,
+          md: (selectedAddress?.uuid === address.uuid) ? alpha(theme.palette.grey[500], 0.12) : undefined
+        },
       }}
       variant="outlined"
 

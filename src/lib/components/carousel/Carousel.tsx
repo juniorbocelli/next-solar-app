@@ -8,9 +8,15 @@ import { Box, useTheme } from '@mui/material';
 // @mui icons
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+// components
+import { AddressCard } from '../card';
+// context
+import { useAddresses } from '@/lib/contexts/addresses';
+// @types
+import { IAddress } from '@/lib/@types/address';
 
 interface CarouselProps {
-  items: React.ReactNode[];
+  addresses: IAddress[];
   slidesToShow: number;
 };
 
@@ -98,7 +104,18 @@ function SlickArrowRight({ currentSlide, slideCount, slidesToShow, ...props }: C
 };
 
 export default function Carousel(props: CarouselProps) {
-  const { items, slidesToShow } = props;
+  const { addresses, slidesToShow } = props;
+  const { selectedAddress } = useAddresses();
+  const slideRef = React.useRef<Slider | null>(null)
+
+  // Effects (goto selected address)
+  React.useEffect(() => {
+    if (selectedAddress !== null)
+      for (let i = 0; i < addresses.length; i++) {
+        if (selectedAddress.uuid === addresses[i].uuid)
+          slideRef.current?.slickGoTo(i)
+      };
+  }, [selectedAddress,]);
 
   const settings_md = {
     dots: false,
@@ -113,9 +130,9 @@ export default function Carousel(props: CarouselProps) {
 
   return (
     <Box sx={{ mx: 3 }}>
-      <Slider {...settings_md}>
+      <Slider ref={slideRef} {...settings_md}>
         {
-          items.map(Item => Item)
+          addresses.map(a => <AddressCard key={a.uuid} address={a} />)
         }
       </Slider>
     </Box>
