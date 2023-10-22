@@ -40,6 +40,7 @@ export default function Marker(props: MarkerProps) {
   const iconRef = React.useRef<HTMLElement | null>(null);
   const [anchor, setAnchor] = React.useState<HTMLElement | null>(null);
 
+  // Control popover status
   const handleOpen = () => {
     setAnchor(iconRef.current);
   };
@@ -47,7 +48,7 @@ export default function Marker(props: MarkerProps) {
     setAnchor(null);
   };
 
-  // Effects
+  // Effects (open popover if selectedAddress is the marker address)
   React.useEffect(() => {
     if (selectedAddress !== null) {
       if (selectedAddress.uuid === address.uuid) {
@@ -59,10 +60,12 @@ export default function Marker(props: MarkerProps) {
     }
   }, [selectedAddress, address.uuid]);
 
+  // Control clicks in icon marker
   const handleClick = () => {
     router.push(`/address/${address.uuid}`);
   };
 
+  // Calculate de solar capacity
   const calculate = () => {
     if (solarInfo !== null)
       return calculateCapacity(solarInfo);
