@@ -34,6 +34,7 @@ export default async function AddressDetailsPage({
   // Verify if uuid is valid
   const address = recognizeAddress(addresses, uuid);
 
+  // Show error modal when address is not valid
   if (address === null)
     return (
       <PageErrorDialog

@@ -117,6 +117,7 @@ export default function Carousel(props: CarouselProps) {
       };
   }, [selectedAddress,]);
 
+  // Configuration of carousel
   const settings_md = {
     dots: false,
     arrrows: true,

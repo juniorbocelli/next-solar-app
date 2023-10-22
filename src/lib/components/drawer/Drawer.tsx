@@ -43,10 +43,14 @@ const StyledBox = styled(Box)(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function SwipeableEdgeDrawer(props: Props) {
+  // context data
   const { addresses, selectedAddress } = useAddresses();
   const theme = useTheme();
+  // test scrren size
   const { smUp } = useBreackpointTest();
   const { window } = props;
+
+  // Control drawer state
   const [open, setOpen] = React.useState(true);
 
   const toggleDrawer = (newOpen: boolean) => () => {
@@ -55,12 +59,13 @@ export default function SwipeableEdgeDrawer(props: Props) {
 
   const container = window !== undefined ? () => window().document.body : undefined;
 
-  // Effects
+  // Effects (initialize opened and close if address is selected)
   React.useEffect(() => {
     if (selectedAddress !== null)
       setOpen(false);
   }, [selectedAddress]);
 
+  // Control the drawer height
   const globalHeight = React.useMemo(() => {
     return open ? smUp ? 'auto' : `calc(90% - ${drawerBleeding}px)` : drawerBleeding;
   }, [smUp, open]);

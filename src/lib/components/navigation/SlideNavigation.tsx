@@ -17,6 +17,7 @@ interface SlideNavigationProps {
 
 export function SlideNavigation(props: SlideNavigationProps) {
   const { addresses } = useAddresses();
+  // To test if dispositive is mobile or not
   const { smUp } = useBreackpointTest();
 
   return (

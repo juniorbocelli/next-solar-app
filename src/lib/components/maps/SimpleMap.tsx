@@ -38,6 +38,8 @@ export default function SimpleMap(props: SimpleMapProps) {
 
   // Layout control
   const { smUp } = useBreackpointTest();
+
+  // Default map config when address is not selected
   const defaultConfiguration: IMapConfiguration = {
     zoom: 5,
     position: {

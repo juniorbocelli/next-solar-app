@@ -98,6 +98,7 @@ export default function Marker(props: MarkerProps) {
   }, [zoom, address.description]);
 
 
+  // This component uses Rect.Suspense to control popover position when his open
   const renderLoader = () => <p>Loading</p>;
 
   return (
