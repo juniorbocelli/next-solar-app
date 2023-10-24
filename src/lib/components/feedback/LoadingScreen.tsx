@@ -1,10 +1,9 @@
+'use client'
 // @mui
 import { styled } from '@mui/material/styles';
 import { LinearProgress } from '@mui/material';
 // components
 import ProgressBar from '../progress-bar';
-// hooks
-import useResponsive from '../../hooks/useResponsive';
 //
 import { HEADER_HEIGHT } from '@/config-global';
 
@@ -26,13 +25,6 @@ const StyledRoot = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function LoadingScreen() {
-
-  const isDesktop = useResponsive('up', 'lg');
-
-  // const isDashboard = isInitialized && pathname.includes('/dashboard') && isDesktop;
-
-  const size = HEADER_HEIGHT;
-
   return (
     <>
       <ProgressBar />
@@ -40,7 +32,7 @@ export default function LoadingScreen() {
       <StyledRoot
         sx={{
           width: 1,
-          height: `calc(100% - ${size}px)`,
+          height: `calc(100% - ${HEADER_HEIGHT}px)`,
         }}
       >
         <LinearProgress color="inherit" sx={{ width: 1, maxWidth: 360 }} />

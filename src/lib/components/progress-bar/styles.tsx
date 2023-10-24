@@ -1,3 +1,4 @@
+'use client'
 // @mui
 import { useTheme } from '@mui/material/styles';
 import GlobalStyles from '@mui/material/GlobalStyles';

@@ -14,6 +14,10 @@ import { MenuPopover } from '../popover';
 import { ILatLng } from '@/lib/@types/map';
 import { IAddress } from '@/lib/@types/address';
 import { ISolar } from '@/lib/@types/solar';
+// contexts
+import { useAddresses } from '@/lib/contexts/addresses';
+// hooks
+import { useBreackpointTest } from '@/lib/hooks/useBreackpointTest';
 //
 import { calculateCapacity } from '@/lib/utils/calculateSolar';
 
@@ -35,6 +39,8 @@ export default function Marker(props: MarkerProps) {
     zoom,
   } = props;
   const router = useRouter();
+  const { handleSelectedAddressChange } = useAddresses();
+  const { smUp } = useBreackpointTest();
 
   // ref to icon
   const iconRef = React.useRef<HTMLElement | null>(null);
@@ -46,6 +52,7 @@ export default function Marker(props: MarkerProps) {
   };
   const handleClose = () => {
     setAnchor(null);
+    handleSelectedAddressChange(null);
   };
 
   // Effects (open popover if selectedAddress is the marker address)
@@ -116,15 +123,28 @@ export default function Marker(props: MarkerProps) {
       <React.Suspense fallback={renderLoader()}>
         <MenuPopover
           anchor={anchor}
-          onClose={handleClose}
+          onClose={undefined}
           arrow={'bottom-center'}
           onWheel={handleClose}
+          autoFocus={false}
         >
           <Box sx={{ p: 2, maxWidth: 280 }}>
             <Typography variant="subtitle1" gutterBottom>
               {address.description}
             </Typography>
-
+            <Typography
+              variant="body2"
+              sx={{
+                fontStyle: 'italic',
+                fontSize: { xs: '0.7rem', md: '0.9rem' },
+                lineHeight: '0.9rem'
+              }}
+            >
+              {`${address.streetName}, ${address.streetNumber}`}
+            </Typography>
+            <Typography variant="body2" sx={{ mb: 1, fontStyle: 'italic', fontSize: { xs: '0.7rem', md: '0.9rem' } }}>
+              {`${address.city}-${address.state}`}
+            </Typography>
             {
               (solarInfo !== null) ?
                 (
@@ -158,7 +178,7 @@ export default function Marker(props: MarkerProps) {
 
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
               <Button color="primary" variant="soft" size="small" onClick={handleClose}>
-                Fechar
+                {!smUp ? 'Fechar' : 'Selecionar outro local'}
               </Button>
             </Box>
           </Box>
