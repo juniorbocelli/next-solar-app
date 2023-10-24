@@ -17,7 +17,7 @@ A segunda página do sistema (aquela que foca em um endereço) não era estritam
 
 ### Navegação
 
-Atualmente é possível navegar pelos endereços de 3 formas:
+Atualmente é possível navegar pelos endereços de 3 formas :
 
  - Entrando diretamente em um link de um endereço específico.
  - Navegar pelo mara clicando sobre os ícones das marçações;
