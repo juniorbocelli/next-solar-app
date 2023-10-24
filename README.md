@@ -29,7 +29,7 @@ Atualmente é possível navegar pelos endereços de 3 formas:
  - Seria necessário navegar obrigatoriamente por muitos endereços indesejados, até que o usuário chegasse a informação que realmente queria exibir.
 
 O sistema conta com dois temas: *light* e *dark* e é totalmente compatível com dispositivos mobile.
- ![enter image description here](https://lh3.googleusercontent.com/pw/ADCreHfziml2Eud-HqyDsy-DKKr1ZeSwdvpILlF0-Q8kpN-LpZ7tj-0Yg43op-o3PxtJw_6h3jD8WWDQPuF8JJJ6mMorEQuQ4Z-VP4rduKZtiSN-OuuuDg=w2400)
+ ![Two themes demo](https://lh3.googleusercontent.com/pw/ADCreHdr3XT50PdcjyOmrWC7P9P16U_aKmZlUsC1bgOCTWNWSyQLEwSNJahXbLzRlBecRgzVsCiqK8n3vOnj1hvsLb1HSEu8DEIYbZRdRTups6jNNnSskA=w2400)
 
 ### Como Executar
 
