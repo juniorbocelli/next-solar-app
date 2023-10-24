@@ -1,3 +1,7 @@
+'use client'
+// components
+import { LoadingScreen } from "@/lib/components/feedback";
+
 export default function Loading() {
-  return (<p>Carregando mapa...</p>);
+  return (<LoadingScreen />);
 }

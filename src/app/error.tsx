@@ -8,7 +8,7 @@ export default function Error() {
   return (
     <PageErrorDialog
       title="Erro"
-      content="Ocorreram erros durante o carregamento do endereço selecionado"
+      content="Ocorreram erros durante o carregamento do mapa"
     />
   );
 }

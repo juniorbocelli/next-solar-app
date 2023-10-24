@@ -12,7 +12,6 @@ import KeyboardDoubleArrowUpRoundedIcon from '@mui/icons-material/KeyboardDouble
 import KeyboardDoubleArrowDownRoundedIcon from '@mui/icons-material/KeyboardDoubleArrowDownRounded';
 // components
 import { Carousel } from '../carousel';
-import { AddressCard } from '../card';
 // hooks
 import { useBreackpointTest } from '@/lib/hooks/useBreackpointTest';
 // contexts
@@ -24,7 +23,7 @@ const drawerBleeding = 56;
 
 interface Props {
   window?: () => Window;
-}
+};
 
 // ----------------------------------------------------------------------
 

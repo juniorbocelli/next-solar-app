@@ -2,12 +2,12 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 // components
-import { AlertDialog } from '.';
+import { AlertDialog } from '../modal-dialog';
 
 interface PageErrorDialogProps {
   title: string;
   content: string;
-  redirectTo: string;
+  redirectTo?: string;
 };
 
 export default function PageErrorDialog(props: PageErrorDialogProps) {
@@ -17,7 +17,8 @@ export default function PageErrorDialog(props: PageErrorDialogProps) {
 
   const handleClose = () => {
     setOpen(false);
-    router.replace(redirectTo);
+    if (typeof redirectTo !== 'undefined')
+      router.replace(redirectTo);
   };
 
   return (

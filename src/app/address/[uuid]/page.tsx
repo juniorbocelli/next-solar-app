@@ -1,5 +1,5 @@
 // components
-import { PageErrorDialog } from '@/lib/components/modal-dialog';
+import { PageErrorDialog } from '@/lib/components/feedback';
 import { SimpleMap } from '@/lib/components/maps';
 // services
 import { getAddresses } from '@/lib/services/getAddresses';

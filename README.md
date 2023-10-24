@@ -13,7 +13,7 @@ O roteamento utilizado foi o novo sistema do **Next 13** usando a pasta *app*. A
 
 ![Deploy result](https://lh3.googleusercontent.com/pw/ADCreHcqg7IRNB_0E8hADLZK1TmbV0-WeTZiCbBfhD1faHKrsc3XLVXN8IP3OnKxucPQLNNdmmJ0IRjb4Ziy8Yf9za00QICRKduLgliMyU3fAoLlqtH3cw=w2400?source=screenshot.guru%22%3E%20%3Cimg%20src=%22https://lh3.googleusercontent.com/pw/ADCreHcqg7IRNB_0E8hADLZK1TmbV0-WeTZiCbBfhD1faHKrsc3XLVXN8IP3OnKxucPQLNNdmmJ0IRjb4Ziy8Yf9za00QICRKduLgliMyU3fAoLlqtH3cw=w600-h315-p-k)  
 
-A segunda página do sistema (aquela que foca em um endereço) não era estritamente necessária para o funcionamento do sistema. Porém, além das vantagens óbvias, **como o compartilhamento de links específicos** e a **possibilidade de obter páginas de forma estática**, essa parecia ser a maneira mais óbvia de se **evitar a exposição da Google API ao usuário**, o que seria uma grave falha na segurança na segurança.
+A segunda página do sistema (aquela que foca em um endereço) não era estritamente necessária para o funcionamento do sistema. Porém, além das vantagens óbvias, **como o compartilhamento de links específicos** e a **possibilidade de obter páginas de forma estática**, essa parecia ser a maneira mais óbvia de se **evitar a exposição da Google API ao usuário**, o que seria uma grave falha na segurança.
 
 ### Navegação
 
