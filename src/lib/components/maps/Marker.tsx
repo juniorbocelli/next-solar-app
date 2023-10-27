@@ -1,6 +1,6 @@
 'use client'
 import React from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 // @mui
 import {
   Button,
@@ -38,7 +38,10 @@ export default function Marker(props: MarkerProps) {
     solarInfo,
     zoom,
   } = props;
+  // router
   const router = useRouter();
+  const params = useParams();
+
   const { handleSelectedAddressChange } = useAddresses();
   const { smUp } = useBreackpointTest();
 
@@ -69,7 +72,10 @@ export default function Marker(props: MarkerProps) {
 
   // Control clicks in icon marker
   const handleClick = () => {
-    router.push(`/address/${address.uuid}`);
+    if (params.uuid === address.uuid)
+      router.refresh();
+    else
+      router.push(`/address/${address.uuid}`);
   };
 
   // Calculate de solar capacity
