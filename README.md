@@ -31,6 +31,10 @@ Atualmente é possível navegar pelos endereços de 3 formas:
 O sistema conta com dois temas: *light* e *dark* e é totalmente compatível com dispositivos mobile.
  ![Two themes demo](https://lh3.googleusercontent.com/pw/ADCreHdr3XT50PdcjyOmrWC7P9P16U_aKmZlUsC1bgOCTWNWSyQLEwSNJahXbLzRlBecRgzVsCiqK8n3vOnj1hvsLb1HSEu8DEIYbZRdRTups6jNNnSskA=w2400)
 
+### Elementos de Mapa
+
+A renderização do mapa é feita através da biblioteca [google-maps-react-markers](https://www.npmjs.com/package/google-maps-react-markers). Os componentes criados foram *SimpleMap*, para a renderização do mapa e *Marker* para as marcações de locais no mapa. Ambos os elementos recebem dados através de *props* e não de contexto, pois foi verificado problemas na renderização do mapa na versão compilada do sistema. Pesquisando sobre o assunto, esse parece ser um problema específico dessa biblioteca.
+
 ### Como Executar
 
 Existem duas maneiras de executar o projeto: o modo de desenvolvimento e o podo compilado, pronto para produção. Por questões de desempenho, a segunda opção é a recomentada.

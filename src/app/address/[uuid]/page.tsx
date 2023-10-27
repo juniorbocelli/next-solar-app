@@ -8,7 +8,6 @@ import { getSolarInformationsByAddress } from '@/lib/services/getSolarInformatio
 import { ISolar } from '@/lib/@types/solar';
 //
 import { recognizeAddress } from '@/lib/utils/recognize-address';
-import { IAddress } from '@/lib/@types/address';
 
 // ----------------------------------------------------------------------
 
@@ -33,6 +32,7 @@ export default async function AddressDetailsPage({
   const addresses = await getAddresses();
 
   // Verify if uuid is valid
+  // This function is executed only in build or when not cached address is selected
   const address = recognizeAddress(addresses, uuid);
 
   // Show error modal when address is not valid
