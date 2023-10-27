@@ -1,6 +1,6 @@
 import { m } from 'framer-motion';
 import React from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 // @mui
 import { alpha } from '@mui/material/styles';
 import {
@@ -25,12 +25,17 @@ export default function AddressCard(props: AddressCardProps) {
   const theme = useTheme();
   // theme context
   const { themeMode } = useSettingsContext();
+  // router
   const router = useRouter();
+  const params = useParams();
   // context data
   const { selectedAddress } = useAddresses();
 
   const handleCardClick = () => {
-    router.push(`/address/${address.uuid}`);
+    if (params.uuid === address.uuid)
+      router.refresh();
+    else
+      router.push(`/address/${address.uuid}`);
   };
 
   return (
